@@ -1,8 +1,8 @@
 const mongoose = require("mongoose");
 
-const orderSchema = new Schema({
+const orderSchema = new mongoose.Schema({
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    items: [{ type: mongoose.Schema.Types.ObjectId, ref: 'CartItem' }], 
+    items: { type: Array, default: [] }, 
     totalAmount: { type: Number, required: true },
     shippingAddress: String,
     status: { type: String, default: 'pending' }, // Order status (e.g., pending, shipped, delivered)

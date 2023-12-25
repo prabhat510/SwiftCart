@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
+import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,6 +13,7 @@ import { CartPageComponent } from './cart-page/cart-page.component';
 import { RegisterUserComponent } from './register-user/register-user.component';
 import { CartItemComponent } from './cart-item/cart-item.component';
 import { PaymentComponent } from './payment/payment.component';
+import { OrderSummaryComponent } from './order-summary/order-summary.component';
 
 @NgModule({
   declarations: [
@@ -22,13 +24,15 @@ import { PaymentComponent } from './payment/payment.component';
     CartPageComponent,
     RegisterUserComponent,
     CartItemComponent,
-    PaymentComponent
+    PaymentComponent,
+    OrderSummaryComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    Ng2SearchPipeModule
   ],
   providers: [],
   bootstrap: [AppComponent]

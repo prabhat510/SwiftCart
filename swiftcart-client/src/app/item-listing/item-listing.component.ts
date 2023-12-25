@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../services/product.service';
+import { filter } from 'rxjs';
 @Component({
   selector: 'app-item-listing',
   templateUrl: './item-listing.component.html',
@@ -11,10 +12,14 @@ export class ItemListingComponent implements OnInit {
   limit = 10;
   offset = 0;
   totalProducts = 0;
+  filterTerm: string = '';
 
   constructor(private productService: ProductService) { }
 
   ngOnInit(): void {
+
+    this.productService.searchTerm.subscribe(res => this.filterTerm = res);
+
     const queryParams = {
       limit: this.limit,
       offset: this.offset

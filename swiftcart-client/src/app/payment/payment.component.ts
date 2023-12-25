@@ -20,7 +20,7 @@ export class PaymentComponent implements OnInit {
     image: "https://t4.ftcdn.net/jpg/02/66/71/71/360_F_266717164_J8Fqw4OcXRkKtNwFyHD02zIEsxPI7qHH.jpg",
     order_id: "order_NGH6adccXE1Bwv", //This is a sample Order ID. Pass the `id` obtained in the response of Step 1
     callback_url: "http://localhost:3000/api/payment/status",
-    redirect: false,
+    redirect: true,
     prefill: {
       //We recommend using the prefill parameter to auto-fill customer's contact information especially their phone number
       name: "Prabhat Bhargav", //your customer's name
@@ -53,6 +53,7 @@ export class PaymentComponent implements OnInit {
         this.options.amount = `${this.totalAmount*100}`;
         this.options.order_id = res.id;
         this.setRazorPayScriptsInDOM();
+        localStorage.setItem("address", JSON.stringify(this.adressForm));
     }) 
     } else {
       alert('please fill all the fields properly');
@@ -79,7 +80,7 @@ export class PaymentComponent implements OnInit {
     const script = document.createElement('script');
     const razorpayClientScript = 'var options = ' + JSON.stringify(this.options) + ';' 
     + ' var rzp1 = new Razorpay(options); rzp1.on("payment.success", ()=>{ location.href="http://localhost:4200" });'
-    + "setTimeout(() => {rzp1.open();}, 1000)";
+    + "setTimeout(() => {rzp1.open();}, 500)";
     const scriptContent = document.createTextNode(razorpayClientScript);
     script.appendChild(scriptContent);
     body.appendChild(script);

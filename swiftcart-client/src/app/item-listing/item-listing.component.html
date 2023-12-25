@@ -1,5 +1,5 @@
 <div class="product-list-wrapper">
-    <div class="product-wrapper" *ngFor="let product of products">
+    <div class="product-wrapper" *ngFor="let product of products | filter : filterTerm">
         <app-item [product]="product"></app-item>
     </div>
 </div>
