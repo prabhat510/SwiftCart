@@ -18,5 +18,17 @@ router.post("/create", async (req, res) => {
   }
 });
 
+router.get("/", async (req, res) => {
+  const offset = req.query.offset;
+  const limit = req.query.limit;
+  try {
+    const productsCount = await Product.find().countDocuments();
+    const products = await Product.find().sort({_id: 1}).skip(parseInt(offset)).limit(parseInt(limit));
+    res.json({products: products, totalCount: productsCount});
+  } catch (error) {
+    console.log(error);
+  }
+});
+
 
 module.exports = router;

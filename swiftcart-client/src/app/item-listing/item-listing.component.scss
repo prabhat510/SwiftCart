@@ -1,0 +1,8 @@
+.product-list-wrapper {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+}
+
+:host {
+    padding: 0px 30px;
+}

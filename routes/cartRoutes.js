@@ -6,9 +6,21 @@ const Cart  = require('../models/cartModel');
 router.get('/items/:userId', async (req, res)=>{
     const userId = req.params.userId;
     try{
-        const items = await Cart.find({userId: userId});
+        const items = await Cart.find({userId}).populate('productId');
         console.log(items);
         res.status(200).json({items});
+    } catch (e) {
+        res.status(500).json({msg: "Internal server error"});
+    }
+})
+
+router.post('/item/exists/:userId', async (req, res)=>{
+    const userId = req.params.userId;
+    const productId = req.body.productId;
+    try{
+        const items = await Cart.findOne({userId, productId}, '_id quantity');
+        console.log(items);
+        res.status(200).json(items);
     } catch (e) {
         res.status(500).json({msg: "Internal server error"});
     }
@@ -55,7 +67,7 @@ router.put('/updateItem/:userId', async(req, res)=>{
     }
 })
 
-// remove items from the cart
+// remove item from the cart
 router.delete('/deleteItem/:userId', async(req, res)=>{
     const userId = req.params.userId;
     const productId = req.body.productId;
