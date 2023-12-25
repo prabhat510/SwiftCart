@@ -1,0 +1,16 @@
+<div class="product-container">
+    <div class="product-image">
+        <app-image-tile [imageUrl]="product.image" [title]="product.name"></app-image-tile>
+    </div>
+
+    <div class="product-metadata">
+        <p>{{product.name}}</p>
+        <p>Rs.&nbsp;{{product.price}}</p>
+    </div>
+
+    <div class="action-buttons">
+        <button type="button" class="btn btn-dark cart-button" (click)="handleClick()">
+            {{isItemAlreadyInCart ? 'Go to Cart': 'Add to Cart'}}
+        </button>
+    </div>
+</div>

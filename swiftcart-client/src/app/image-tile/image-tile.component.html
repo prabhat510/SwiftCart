@@ -1,0 +1,4 @@
+<div class="product-image-container">
+    <img class="product-image" *ngIf="imageUrl.length > 5" [src]="imageUrl" [alt]="title">
+    <img class="product-image" *ngIf="imageUrl.length < 5" src="./assets/no-image-icon-23485.png" [alt]="title">
+</div>
