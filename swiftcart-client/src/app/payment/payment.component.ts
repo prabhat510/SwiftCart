@@ -1,7 +1,6 @@
-import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { PaymentService } from '../services/payment.service';
-import { AuthService } from '../services/auth.service';
+import { OrderService } from '../services/order.service';
 import { ProductService } from '../services/product.service';
 
 
@@ -42,10 +41,10 @@ export class PaymentComponent implements OnInit {
     billing: ''
   }
   orderData:any;
-  constructor(private productService: ProductService, private paymentService: PaymentService) { }
+  constructor(private productService: ProductService, private orderService: OrderService) { }
 
   ngOnInit(): void {
-    this.paymentService.cartItemsTotalPrice$.subscribe(amount=>  this.totalAmount = amount);
+    this.orderService.cartItemsTotalPrice$.subscribe((amount: any)=>  this.totalAmount = amount);
     this.productService.orderSummary$.subscribe(res=>  {this.orderData = res; console.log('observable res::', res);});
   }
   submitForm(form: NgForm) {
@@ -63,7 +62,7 @@ export class PaymentComponent implements OnInit {
           shippingAddress: this.adressForm.shipment,
           orderId: res.id
         }
-        this.paymentService.createOrder(orderPayload, this.orderData.userId).subscribe((res)=>{
+        this.orderService.createOrder(orderPayload, this.orderData.userId).subscribe((res)=>{
           console.log('order created::', res);
         });
         localStorage.setItem("address", JSON.stringify(this.adressForm));
@@ -80,7 +79,7 @@ export class PaymentComponent implements OnInit {
       "reciept": 'reciept_1'
     };
     return new Promise((resolve, reject)=>{
-      this.paymentService.createOrderId(payload)
+      this.orderService.createOrderId(payload)
       .subscribe((res: any)=>{
         this.orderId = res.id;
         resolve(res);

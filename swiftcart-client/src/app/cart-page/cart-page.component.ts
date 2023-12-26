@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CartService } from '../services/cart.service';
 import { AuthService } from '../services/auth.service';
-import { PaymentService } from '../services/payment.service';
+import { OrderService } from '../services/order.service';
 import { ProductService } from '../services/product.service';
 
 @Component({
@@ -22,7 +22,9 @@ export class CartPageComponent implements OnInit {
     status: 'pending'
   }
   
-  constructor(private cartService: CartService, private authService: AuthService,  private paymentService: PaymentService,
+  constructor(private cartService: CartService,
+    private authService: AuthService, 
+    private orderService: OrderService,
     private productService: ProductService)  { }
 
   ngOnInit(): void {
@@ -48,7 +50,7 @@ export class CartPageComponent implements OnInit {
         this.totalCartItems += product.quantity;
       }
       this.orderSummary.totalAmount = this.cartItemsTotalPrice + (this.cartItemsTotalPrice * 18)/100;
-      this.paymentService.cartItemsTotalPrice$.next(this.orderSummary.totalAmount);
+      this.orderService.cartItemsTotalPrice$.next(this.orderSummary.totalAmount);
       console.log('cart response', res, this.products);
     })
   }
@@ -60,10 +62,9 @@ export class CartPageComponent implements OnInit {
     } else if(event.action === 'removed') {
       this.cartItemsTotalPrice -= event.price;
     }
-    this.paymentService.cartItemsTotalPrice$.next(this.cartItemsTotalPrice + (this.cartItemsTotalPrice * 18)/100);
+    this.orderService.cartItemsTotalPrice$.next(this.cartItemsTotalPrice + (this.cartItemsTotalPrice * 18)/100);
   }
   onCheckout() {
-    // localStorage.setItem("orderSummary", JSON.stringify(this.orderSummary));
     this.productService.orderSummary$.next(this.orderSummary);
   }
 

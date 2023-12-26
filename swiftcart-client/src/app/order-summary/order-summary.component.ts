@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductService } from '../services/product.service';
 import {jsPDF} from 'jspdf';
-import { PaymentService } from '../services/payment.service';
+import { OrderService } from '../services/order.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -12,12 +11,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class OrderSummaryComponent implements OnInit {
   orderId:any = '';
   orderData: any = {};
-  constructor(private paymentService: PaymentService, private route: ActivatedRoute) { }
+  constructor(private orderService: OrderService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     const queryParams = this.route.snapshot.queryParamMap;
     this.orderId = queryParams.get('orderId');
-    this.paymentService.getOrderDetails(this.orderId).subscribe((res: any)=>{
+    this.orderService.getOrderDetails(this.orderId).subscribe((res: any)=>{
       this.orderData = res;
       console.log('order api response', res);
     })

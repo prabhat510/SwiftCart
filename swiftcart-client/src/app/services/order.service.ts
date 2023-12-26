@@ -6,7 +6,7 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class PaymentService {
+export class OrderService {
   cartItemsTotalPrice$ = new BehaviorSubject<number>(0);
   constructor(private httpClient: HttpClient) { }
 
