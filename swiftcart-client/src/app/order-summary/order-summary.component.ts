@@ -44,14 +44,18 @@ export class OrderSummaryComponent implements OnInit {
       const product = orderedData.items[key];
 
       for(let prop in product){
+        if(prop === 'price') {
+          res += (prop + ' : Rs. ' + product[prop] + '\n\n');
+        } else {
         res += (prop + ' : ' + product[prop] + '\n\n');
+        }
       }
 
       res += ' ------------------------------------------------------- \n\n';
 
     }
 
-    res += 'Total amount paid(including taxes) : ' + orderedData.totalAmount + '\n\n';
+    res += 'Total amount paid(including taxes) : Rs. ' + orderedData.totalAmount + '\n\n';
 
     res += 'Shipping Address  : ' + orderedData.shippingAddress + '\n\n';
 
