@@ -8,9 +8,9 @@ router.post("/create", async (req, res) => {
       productIdentifier: productPayload.productIdentifier
       });
       if(productAlreadyPresent) {
-        res.json({ status: 409, message: "product already exists" });
+        res.status(409).json({ status: 409, message: "product already exists" });
       } else {
-       const product = await Product.create(productPayload);
+        const product = await Product.create(productPayload);
         res.status(201).json(product);
       }
   } catch (error) {
@@ -24,11 +24,22 @@ router.get("/", async (req, res) => {
   try {
     const productsCount = await Product.find().countDocuments();
     const products = await Product.find().sort({_id: 1}).skip(parseInt(offset)).limit(parseInt(limit));
-    res.json({products: products, totalCount: productsCount});
+    res.status(200).json({products: products, totalCount: productsCount});
   } catch (error) {
     console.log(error);
   }
 });
+
+
+router.delete("/delete/:productIdentifier", async (req, res) => {
+  try{
+    const productIdentifier = req.params.productIdentifier;
+    const product  = await Product.findOneAndDelete({productIdentifier});
+    res.status(201).json(product);
+  }catch (e) {
+    res.status(500).json({});
+  }
+})
 
 
 module.exports = router;

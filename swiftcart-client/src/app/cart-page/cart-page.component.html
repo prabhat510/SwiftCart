@@ -14,7 +14,7 @@
             <p><span class="placeholder">Tax:</span><span>{{'Rs. ' +(cartItemsTotalPrice * 18)/100}}</span></p>
             <hr>
             <p><span class="placeholder">Total Amount:</span><span>{{'Rs. ' + (cartItemsTotalPrice + (cartItemsTotalPrice * 18)/100)}}</span></p>
-            <p><button type="button" class="btn btn-primary" routerLink="/payment">Procees to Checkout</button></p>
+            <p><button type="button" class="btn btn-primary" routerLink="/payment" (click)="onCheckout()">Procees to Checkout</button></p>
         </div>
     </div>
 </div>

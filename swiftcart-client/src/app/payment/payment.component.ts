@@ -1,6 +1,8 @@
 import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { PaymentService } from '../services/payment.service';
+import { AuthService } from '../services/auth.service';
+import { ProductService } from '../services/product.service';
 
 
 @Component({
@@ -39,11 +41,12 @@ export class PaymentComponent implements OnInit {
     shipment:'',
     billing: ''
   }
-
-  constructor(private renderer: Renderer2, private el: ElementRef, private paymentService: PaymentService) { }
+  orderData:any;
+  constructor(private productService: ProductService, private paymentService: PaymentService) { }
 
   ngOnInit(): void {
     this.paymentService.cartItemsTotalPrice$.subscribe(amount=>  this.totalAmount = amount);
+    this.productService.orderSummary$.subscribe(res=>  {this.orderData = res; console.log('observable res::', res);});
   }
   submitForm(form: NgForm) {
     
@@ -53,6 +56,16 @@ export class PaymentComponent implements OnInit {
         this.options.amount = `${this.totalAmount*100}`;
         this.options.order_id = res.id;
         this.setRazorPayScriptsInDOM();
+        const orderPayload = {
+          user: this.orderData.userId,
+          totalAmount: this.orderData.totalAmount,
+          items: this.orderData.items,
+          shippingAddress: this.adressForm.shipment,
+          orderId: res.id
+        }
+        this.paymentService.createOrder(orderPayload, this.orderData.userId).subscribe((res)=>{
+          console.log('order created::', res);
+        });
         localStorage.setItem("address", JSON.stringify(this.adressForm));
     }) 
     } else {

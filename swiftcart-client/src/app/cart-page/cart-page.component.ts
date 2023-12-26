@@ -38,14 +38,17 @@ export class CartPageComponent implements OnInit {
       this.cartItemsTotalPrice = 0;
       for(const product of this.products) {
         this.orderSummary.items.push(
-          {productId: product.productId._id, productName: product.productId.name,
-          quantity: product.productId.quantity, price: product.productId.price })
+          {
+            productId: product.productId._id, 
+            productName: product.productId.name,
+            quantity: product.quantity, 
+            price: product.productId.price 
+          })
         this.cartItemsTotalPrice += product.productId.price * product.quantity;
         this.totalCartItems += product.quantity;
       }
-      this.orderSummary.totalAmount = this.cartItemsTotalPrice;
-      this.paymentService.cartItemsTotalPrice$.next(this.cartItemsTotalPrice + (this.cartItemsTotalPrice * 18)/100);
-      this.productService.orderData$.next({"name":"123", email: "123"});
+      this.orderSummary.totalAmount = this.cartItemsTotalPrice + (this.cartItemsTotalPrice * 18)/100;
+      this.paymentService.cartItemsTotalPrice$.next(this.orderSummary.totalAmount);
       console.log('cart response', res, this.products);
     })
   }
@@ -58,6 +61,10 @@ export class CartPageComponent implements OnInit {
       this.cartItemsTotalPrice -= event.price;
     }
     this.paymentService.cartItemsTotalPrice$.next(this.cartItemsTotalPrice + (this.cartItemsTotalPrice * 18)/100);
+  }
+  onCheckout() {
+    // localStorage.setItem("orderSummary", JSON.stringify(this.orderSummary));
+    this.productService.orderSummary$.next(this.orderSummary);
   }
 
 }
