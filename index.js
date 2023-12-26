@@ -2,7 +2,6 @@ const express = require('express');
 const dotenv = require("dotenv");
 const cors = require("cors");
 const bodyParser = require("body-parser");
-const Razorpay = require('razorpay');
 const app = express();
 require('./db/conn')();
 const userRoutes = require('./routes/userRoutes');
@@ -36,3 +35,6 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, ()=>{
     console.log('listening on::', PORT);
 })
+
+
+module.exports = app;

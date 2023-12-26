@@ -15,4 +15,13 @@ export class PaymentService {
     return this.httpClient.post(url, paymentPayload);
   }
 
+  createOrder(orderPayload: any, userId: string) {
+    const url = getServiceUrl().swiftCartApiEndpoint + '/order/create/' + userId;
+    return this.httpClient.post(url, orderPayload);
+  }
+
+  getOrderDetails(orderId: string) {
+    const url = getServiceUrl().swiftCartApiEndpoint + '/order/' + orderId;
+    return this.httpClient.get(url);
+  }
 }

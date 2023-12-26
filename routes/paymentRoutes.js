@@ -41,7 +41,7 @@ router.post('/status', async (req, res)=>{
         orderId: paymentStatusPayload.razorpay_order_id,
         signature: paymentStatusPayload.razorpay_signature
       });
-      res.status(200).redirect('http://localhost:4200/order-summary');
+      res.status(200).redirect(`http://localhost:4200/order-summary?orderId=${paymentStatusPayload.razorpay_order_id}`);
     } catch (error) {
       res.status(500).send("server error!");
     }

@@ -27,6 +27,7 @@ export class RegisterUserComponent implements OnInit {
       .subscribe((res: any)=>{
         console.log('registration success::', res)
         localStorage.setItem('user', JSON.stringify({
+          token: res.token,
           email: res.email,
           mobile: res.mobile,
           name: res.name,

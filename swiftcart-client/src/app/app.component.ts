@@ -15,6 +15,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
+   
       // const isPaymentSuccessfull = window.location.href.split('?')[1].includes('success');
       // console.log();
   }
