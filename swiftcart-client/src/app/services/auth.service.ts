@@ -22,4 +22,9 @@ export class AuthService {
     }
     return userId;
   }
+
+  getNewToken() {
+    const url = getServiceUrl().swiftCartApiEndpoint + '/user/token';
+    return this.httpClient.get(url);
+  }
 }

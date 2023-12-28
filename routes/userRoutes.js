@@ -41,7 +41,7 @@ router.get("/all/users", async (req, res)=>{
 
 router.get('/token', (req, res)=>{
   const token = jwt.sign({key: "value"}, process.env.TOKEN_SECRET, {
-    expiresIn: '5m'
+    expiresIn: '30s'
   });
   res.json({token: token});
 })
