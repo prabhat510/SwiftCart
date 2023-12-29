@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { CartService } from '../services/cart.service';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { IProduct } from '../interfaces/product.interface'; 
 
 @Component({
   selector: 'app-item',
@@ -10,13 +11,14 @@ import { Router } from '@angular/router';
 })
 export class ItemComponent implements OnInit {
 
-  @Input() product: any; 
+  @Input() product: IProduct; 
   isItemAlreadyInCart = false;
   userId!:string;
 
   constructor(private cartService: CartService, private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
+    console.log('ngOnInit::');
     this.userId = this.authService.getUserId();
     const payload = {
       productId: this.product._id

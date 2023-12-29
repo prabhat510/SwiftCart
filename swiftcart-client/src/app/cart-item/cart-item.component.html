@@ -1,19 +1,19 @@
-<div class="product-container">
+<div class="product-container" *ngIf="cartItem">
     <div class="image-wrapper">
-        <app-image-tile [imageUrl]="product.productId.image" [title]="product.productId.name"></app-image-tile>
+        <app-image-tile [imageUrl]="cartItem.productId.image" [title]="cartItem.productId.name"></app-image-tile>
     </div>
     <div class="product-metadata">
-        <p>{{product.productId.name}}</p>
-        <p>{{'Rs. ' + product.productId.price}}</p>
+        <p>{{cartItem.productId.name}}</p>
+        <p>{{'Rs. ' + cartItem.productId.price}}</p>
         <p>
-            <button type="button" class="btn btn-secondary" [disabled]="quantity===1" (click)="handleProductCount('removed', product.productId._id)">
+            <button type="button" class="btn btn-secondary" [disabled]="quantity===1" (click)="handleProductCount('removed', cartItem.productId._id)">
                 -
             </button>
             {{quantity}}
-            <button type="button" class="btn btn-secondary" (click)="handleProductCount('added', product.productId._id)">
+            <button type="button" class="btn btn-secondary" (click)="handleProductCount('added', cartItem.productId._id)">
                 +
             </button>
         </p>
-        <p><button type="button" class="btn btn-danger" (click)="removeCartItem(product.productId._id)">REMOVE</button></p>
+        <p><button type="button" class="btn btn-danger" (click)="removeCartItem(cartItem.productId._id)">REMOVE</button></p>
     </div>
 </div>

@@ -1,23 +1,24 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CartService } from '../services/cart.service';
 import { AuthService } from '../services/auth.service';
-
+import { ICartItem } from '../interfaces/cartitem.interface'; 
 @Component({
   selector: 'app-cart-item',
   templateUrl: './cart-item.component.html',
   styleUrls: ['./cart-item.component.scss']
 })
 export class CartItemComponent implements OnInit {
-  userId!:string;
+  userId :string;
   quantity = 1;
-  @Input() product: any; 
-  @Output() removeItemEvent = new EventEmitter<any>();
-  @Output() updateCartEvent = new EventEmitter<any>();
-  constructor(private cartService: CartService, private authService: AuthService) { }
+  @Input() cartItem: ICartItem;
+  @Output() removeItemEvent: EventEmitter<any> = new EventEmitter<any>();
+  @Output() updateCartEvent: EventEmitter<any> = new EventEmitter<any>();
+  constructor(private cartService: CartService, private authService: AuthService) { 
+  }
 
   ngOnInit(): void {
     this.userId = this.authService.getUserId();
-    this.quantity = this.product.quantity;
+    this.quantity = this.cartItem.quantity;
   }
 
   handleProductCount(action:string, productId: string) {
@@ -26,7 +27,7 @@ export class CartItemComponent implements OnInit {
       this.cartService.updateItemQuantity(productPayload, this.userId)
       .subscribe((res)=>{
         this.quantity += 1;
-        this.updateCartEvent.emit({action: action, price: this.product.productId.price});
+        this.updateCartEvent.emit({action: action, price: this.cartItem.productId.price});
         console.log('count increased::', res);
       })
     } else if(action === "removed") {
@@ -34,7 +35,7 @@ export class CartItemComponent implements OnInit {
       this.cartService.updateItemQuantity(productPayload, this.userId)
       .subscribe((res)=>{
         this.quantity -= 1;
-        this.updateCartEvent.emit({action: action, price: this.product.productId.price});
+        this.updateCartEvent.emit({action: action, price: this.cartItem.productId.price});
         console.log('count decreased::', res);
       })
     }
@@ -44,6 +45,7 @@ export class CartItemComponent implements OnInit {
     const productPayload = {productId: productId};
     this.cartService.removeCartItem(productPayload, this.userId)
     .subscribe((res: any)=> {
+      console.log("res==....", res);
       this.removeItemEvent.emit();
     });
   }

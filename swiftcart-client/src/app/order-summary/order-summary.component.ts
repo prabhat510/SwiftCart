@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {jsPDF} from 'jspdf';
 import { OrderService } from '../services/order.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-order-summary',

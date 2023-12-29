@@ -1,4 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientModule } from '@angular/common/http';
 
 import { CartPageComponent } from './cart-page.component';
 
@@ -8,6 +9,7 @@ describe('CartPageComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [HttpClientModule],
       declarations: [ CartPageComponent ]
     })
     .compileComponents();

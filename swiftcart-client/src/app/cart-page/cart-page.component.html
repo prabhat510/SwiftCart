@@ -4,7 +4,7 @@
     <div class="cart-wrapper">
         <div class="cart-items-wrapper">
             <div class="cart-item" *ngFor="let product of products">
-                <app-cart-item [product]="product" (removeItemEvent)="fetchCartProducts()" (updateCartEvent)="updateTotalPrice($event)"></app-cart-item>
+                <app-cart-item [cartItem]="product" (removeItemEvent)="fetchCartProducts()" (updateCartEvent)="updateTotalPrice($event)"></app-cart-item>
             </div>
         </div>
         <div class="price-details">

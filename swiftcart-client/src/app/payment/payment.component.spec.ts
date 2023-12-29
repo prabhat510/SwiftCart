@@ -1,6 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientModule } from '@angular/common/http';
 
 import { PaymentComponent } from './payment.component';
+import { FormsModule } from '@angular/forms';
+
 
 describe('PaymentComponent', () => {
   let component: PaymentComponent;
@@ -8,6 +11,7 @@ describe('PaymentComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [HttpClientModule, FormsModule],
       declarations: [ PaymentComponent ]
     })
     .compileComponents();

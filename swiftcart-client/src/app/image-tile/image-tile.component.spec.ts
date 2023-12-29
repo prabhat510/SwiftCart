@@ -8,7 +8,7 @@ describe('ImageTileComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ImageTileComponent ]
+      declarations: [ ImageTileComponent ],
     })
     .compileComponents();
 

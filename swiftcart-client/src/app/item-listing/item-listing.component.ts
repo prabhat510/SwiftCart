@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../services/product.service';
-import { filter } from 'rxjs';
 @Component({
   selector: 'app-item-listing',
   templateUrl: './item-listing.component.html',
