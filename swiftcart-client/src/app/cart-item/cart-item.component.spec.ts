@@ -15,6 +15,10 @@ class MockCartService {
       quantity: 2
     });
   }
+
+  updateItemQuantity() {
+    return of({});
+  }
 }
 
 
@@ -64,6 +68,34 @@ describe('CartItemComponent', () => {
       spyOn(component.removeItemEvent, 'emit');
       component.removeCartItem('123');
       expect(component.removeItemEvent.emit).toHaveBeenCalled();
+    })
+  })
+
+  describe('handleProductCount method', ()=>{
+    it('should be defined', ()=>{
+      expect(component.handleProductCount).toBeDefined();
+    })
+
+    it('should increase the cart item quantity by 1 when an item is added', ()=>{
+      component.quantity = 1;
+      component.userId = 'user1';
+      spyOn(component.updateCartEvent, 'emit');
+      component.handleProductCount('added', '123');
+      expect(component.quantity).toEqual(2);
+      expect(component.updateCartEvent.emit).toHaveBeenCalledWith({
+        action: 'added', price: 400
+      });
+    })
+
+    it('should decrease the cart item quantity by 1 when an item is removed', ()=>{
+      component.quantity = 2;
+      component.userId = 'user1';
+      spyOn(component.updateCartEvent, 'emit');
+      component.handleProductCount('removed', '123');
+      expect(component.quantity).toEqual(1);
+      expect(component.updateCartEvent.emit).toHaveBeenCalledWith({
+        action: 'removed', price: 400
+      });
     })
   })
 });

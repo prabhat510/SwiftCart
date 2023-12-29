@@ -3,6 +3,7 @@ import { CartService } from '../services/cart.service';
 import { AuthService } from '../services/auth.service';
 import { OrderService } from '../services/order.service';
 import { ProductService } from '../services/product.service';
+import { IOrder } from '../interfaces/order.interface';
 
 @Component({
   selector: 'app-cart-page',
@@ -11,10 +12,10 @@ import { ProductService } from '../services/product.service';
 })
 export class CartPageComponent implements OnInit {
   products: Array<any> = [];
-  userId!:string;
+  userId:string;
   cartItemsTotalPrice = 0;
   totalCartItems = 0;
-  orderSummary: any = {
+  orderSummary: IOrder = {
     userId: '',
     totalAmount: 0,
     items: [],
@@ -38,7 +39,7 @@ export class CartPageComponent implements OnInit {
     .subscribe((res:any)=>{
       this.products = res.items;
       this.cartItemsTotalPrice = 0;
-      for(const product of this.products) {
+      for(const product of res.items) {
         this.orderSummary.items.push(
           {
             productId: product.productId._id, 
