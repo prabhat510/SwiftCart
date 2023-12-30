@@ -6,25 +6,63 @@
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item active">
-            <a class="nav-link" aria-current="page" href="#" routerLink = "/register">Register</a>
-          </li>
-          <li class="nav-item active">
-            <a class="nav-link" href="#" routerLink="/cart">Cart</a>
-          </li>
-        </ul>
-        <form class="d-flex">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search" [(ngModel)]="searchKey">
-          <button class="btn btn-outline-success" type="submit" (click)="search()">Search</button>
-          
+        <form class="d-flex" style="margin-left: 35%;">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search" [(ngModel)]="filterTerm">
+          <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
       </div>
     </div>
   </nav>
 </header>
 <main>
-  <router-outlet></router-outlet>
+  <div class="top-container">
+    <div class="left-container">
+      <div class="product-list-wrapper">
+        <div class="product-wrapper" *ngFor="let product of products | filter : filterTerm">
+            <div class="product-container" *ngIf="product">
+                <div class="product-image">
+                    <app-image-tile [imageUrl]="product.image" [title]="product.name"></app-image-tile>
+                </div>
+            
+                <div class="product-metadata">
+                    <p>{{product.name}}</p>
+                    <p>Rs.&nbsp;{{product.price}}</p>
+                </div>
+            
+                <div class="action-buttons">
+                    <button type="button" class="btn btn-dark cart-button" (click)="addToCart(product)"  [disabled]="product.isItemAlreadyInCart">
+                        Add to Cart
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <div class="right-container">
+      <div class="cart-page">
+        <p>Cart Details</p>
+        <hr>
+        <div class="cart-wrapper">
+            <div class="cart-items-wrapper">
+                <div class="cart-item" *ngFor="let product of cartProducts">
+                    <app-cart-item [cartItem]="product" (removeItemEvent)="[fetchCartProducts(), fetchDisplayProducts()]" (updateCartEvent)="updateTotalPrice($event)"></app-cart-item>
+                </div>
+            </div>
+            <div class="price-details">
+                <p>Price Details</p>
+                <hr>
+                <p><span class="placeholder">Cart Total:</span><span>{{'Rs. ' + cartItemsTotalPrice}}</span></p>
+                <p><span class="placeholder">Tax:</span><span>{{'Rs. ' +(cartItemsTotalPrice * 18)/100}}</span></p>
+                <hr>
+                <p><span class="placeholder">Total Amount:</span><span>{{'Rs. ' + (cartItemsTotalPrice + (cartItemsTotalPrice * 18)/100)}}</span></p>
+            </div>
+        </div>
+    </div>
+    
+      <app-payment [totalAmount]="cartItemsTotalPrice" [userId]="userId" [totalAmount]="totalAmountWithTax" [items]="cartProducts"></app-payment>
+      <p><button class="btn btn-secondary" style="margin-left: 30px;" *ngIf="enableDownload" (click)="generateAndOpenPDF(orderData)">Download Receipt</button></p>
+    </div>
+  </div>
 </main>
 <footer>
   

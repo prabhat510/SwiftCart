@@ -1,0 +1,18 @@
+.top-container {
+    display: flex;
+    padding: 30px 0px;
+}
+
+.product-list-wrapper {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+}
+
+
+.product-metadata, .action-buttons {
+    text-align: center;
+}
+
+.cart-page {
+    padding: 30px;
+}

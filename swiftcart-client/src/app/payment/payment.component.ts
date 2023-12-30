@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { OrderService } from '../services/order.service';
 import { ProductService } from '../services/product.service';
@@ -10,8 +10,11 @@ import { ProductService } from '../services/product.service';
   styleUrls: ['./payment.component.scss']
 })
 export class PaymentComponent implements OnInit {
-  totalAmount = 0;
-  orderId!:string;
+  @Input() totalAmount = 0;
+  @Input() userId: any;
+  @Input() items: any;
+  orderId:string;
+
   options = {
     key: "rzp_test_Vsyn9DFkRneYcm", // Enter the Key ID generated from the Dashboard
     amount: "100", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
@@ -40,12 +43,10 @@ export class PaymentComponent implements OnInit {
     shipment:'',
     billing: ''
   }
-  orderData:any;
-  constructor(private productService: ProductService, private orderService: OrderService) { }
+  constructor(private orderService: OrderService) { }
 
   ngOnInit(): void {
-    this.orderService.cartItemsTotalPrice$.subscribe((amount: any)=>  this.totalAmount = amount);
-    this.productService.orderSummary$.subscribe(res=>  {this.orderData = res; console.log('observable res::', res);});
+
   }
   submitForm(form: NgForm) {
     
@@ -56,13 +57,13 @@ export class PaymentComponent implements OnInit {
         this.options.order_id = res.id;
         this.setRazorPayScriptsInDOM();
         const orderPayload = {
-          user: this.orderData.userId,
-          totalAmount: this.orderData.totalAmount,
-          items: this.orderData.items,
+          user: this.userId,
+          totalAmount: this.totalAmount,
+          items: this.items,
           shippingAddress: this.adressForm.shipment,
           orderId: res.id
         }
-        this.orderService.createOrder(orderPayload, this.orderData.userId).subscribe((res)=>{
+        this.orderService.createOrder(orderPayload, this.userId).subscribe((res)=>{
           console.log('order created::', res);
         });
         localStorage.setItem("address", JSON.stringify(this.adressForm));

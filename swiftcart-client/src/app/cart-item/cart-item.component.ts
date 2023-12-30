@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CartService } from '../services/cart.service';
 import { AuthService } from '../services/auth.service';
 import { ICartItem } from '../interfaces/cartitem.interface'; 
+import { getServiceUrl } from '../utils/api.config';
 @Component({
   selector: 'app-cart-item',
   templateUrl: './cart-item.component.html',
@@ -48,5 +49,9 @@ export class CartItemComponent implements OnInit {
       console.log("res==....", res);
       this.removeItemEvent.emit();
     });
+  }
+
+  getImageSrc(imageId: string) {
+    return getServiceUrl().swiftCartApiEndpoint + '/images/' + imageId;
   }
 }

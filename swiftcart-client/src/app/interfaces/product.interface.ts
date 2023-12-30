@@ -7,5 +7,6 @@ export interface IProduct {
     rating: number,
     price: number,
     description: string,
-    isAvailable: boolean
+    isAvailable: boolean,
+    isItemAlreadyInCart: boolean
 }

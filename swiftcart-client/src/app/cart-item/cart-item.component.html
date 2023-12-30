@@ -1,6 +1,6 @@
 <div class="product-container" *ngIf="cartItem">
     <div class="image-wrapper">
-        <app-image-tile [imageUrl]="cartItem.productId.image" [title]="cartItem.productId.name"></app-image-tile>
+        <app-image-tile [imageUrl]="getImageSrc(cartItem.productId.image)" [title]="cartItem.productId.name"></app-image-tile>
     </div>
     <div class="product-metadata">
         <p>{{cartItem.productId.name}}</p>
