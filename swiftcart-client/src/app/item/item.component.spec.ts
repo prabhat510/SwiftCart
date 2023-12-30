@@ -1,7 +1,12 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, inject } from '@angular/core/testing';
 import { HttpClientModule } from '@angular/common/http';
 
 import { ItemComponent } from './item.component';
+import { Router } from '@angular/router';
+
+class MockRouter {
+
+}
 
 describe('ItemComponent', () => {
   let component: ItemComponent;
@@ -34,4 +39,24 @@ describe('ItemComponent', () => {
  
     expect(component).toBeTruthy();
   });
+
+  describe('handleClick', ()=>{
+    it('should navigate to cart page if the item already exists in the cart', inject([Router], (
+      router: Router
+    )=>{
+      spyOn(router, 'navigate');
+      component.isItemAlreadyInCart = true;
+      component.handleClick();
+      expect(router.navigate).toHaveBeenCalledWith(['/cart']);
+    }))
+
+    it('should add item to cart page if the item doesnot exists in the cart', inject([Router], (
+      router: Router
+    )=>{
+      spyOn(component, 'addToCart');
+      component.isItemAlreadyInCart = false;
+      component.handleClick();
+      expect(component.addToCart).toHaveBeenCalled();
+    }))
+  })
 });

@@ -1,6 +1,5 @@
 const router = require("express").Router();
 const Product  = require("../models/productModel");
-const verifyToken = require('../auth/authVerify')
 
 
 router.post("/create", async (req, res) => {
@@ -20,7 +19,7 @@ router.post("/create", async (req, res) => {
   }
 });
 
-router.get("/", verifyToken, async (req, res) => {
+router.get("/", async (req, res) => {
   const offset = req.query.offset;
   const limit = req.query.limit;
   try {

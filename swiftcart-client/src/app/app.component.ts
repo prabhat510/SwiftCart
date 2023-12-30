@@ -44,15 +44,17 @@ export class AppComponent implements OnInit {
     }
   }
 
-  checkTokenValidity(decoded: any) {
+  checkTokenValidity(decodedToken: any) {
     // time is in epoch
+   if(decodedToken && decodedToken.exp) {
     const currentTime =  Math.floor(Date.now()/1000);
-    const tokenExpiryTime = decoded.exp;
+    const tokenExpiryTime = decodedToken.exp;
     console.log(currentTime, tokenExpiryTime);
     if(currentTime > tokenExpiryTime) {
       // get new token
       this.getNewToken();
     }
+  } 
   }
 
   getNewToken() {

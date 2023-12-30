@@ -9,6 +9,7 @@ const cartRoutes = require('./routes/cartRoutes');
 const productRoutes = require('./routes/productRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
+const imageRoutes = require('./routes/imageRoutes');
 
 app.use(
     cors({
@@ -26,11 +27,15 @@ app.use('/api/cart', cartRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/order', orderRoutes);
 app.use('/api/payment', paymentRoutes);
+app.use('/api/images', imageRoutes);
 
 
+
+app.get('api/status', (req, res)=>{
+  res.status(200).send("ok");
+})
 
 const PORT = process.env.PORT || 3000;
-
 
 app.listen(PORT, ()=>{
     console.log('listening on::', PORT);

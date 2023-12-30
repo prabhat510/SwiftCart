@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../services/product.service';
+import { IProduct } from '../interfaces/product.interface';
+import { getServiceUrl } from '../utils/api.config';
+
 @Component({
   selector: 'app-item-listing',
   templateUrl: './item-listing.component.html',
@@ -7,7 +10,7 @@ import { ProductService } from '../services/product.service';
 })
 export class ItemListingComponent implements OnInit {
 
-  products = [];
+  products: Array<IProduct> = [];
   limit = 10;
   offset = 0;
   totalProducts = 0;
@@ -27,10 +30,16 @@ export class ItemListingComponent implements OnInit {
     .subscribe({
       next: (res:any)=>{
         this.products = res.products;
+        this.setImageSrc();
         this.totalProducts = res.totalCount;
         console.log('count', this.totalProducts, 'res', this.products);
       }
     })
   }
 
+  setImageSrc() {
+      for (let i = 0; i < this.products.length; i++) {
+        this.products[i].image = getServiceUrl().swiftCartApiEndpoint + '/images/' + this.products[i].image;
+      }
+  }
 }

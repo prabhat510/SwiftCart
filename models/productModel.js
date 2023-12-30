@@ -8,7 +8,7 @@ const productSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  image: { type: String, required: true },
+  image: { type: mongoose.Schema.Types.ObjectId, ref: 'Image' },
   rating: {type: Number, required: true},
   price: { type: Number, required: true },
   description: { type: String, required: true },

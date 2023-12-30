@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register-user',
@@ -16,7 +17,7 @@ export class RegisterUserComponent implements OnInit {
     email: '',
     mobile: ''
   }
-  constructor(private authService: AuthService) { }
+  constructor(private authService: AuthService, private router: Router) { }
 
   ngOnInit(): void {
   }
@@ -34,6 +35,9 @@ export class RegisterUserComponent implements OnInit {
           username: res.username,
           userId: res._id
         }))
+        setTimeout(() => {
+          this.router.navigate(['']);
+        }, 500);
       })
     } else {
       alert('please fill all the fields properly');
