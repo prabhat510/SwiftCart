@@ -17,6 +17,7 @@ import { getServiceUrl } from './utils/api.config';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  showForm = true;
   user:any;
   products: Array<IProduct> = [];
   limit = 10;
@@ -57,13 +58,10 @@ export class AppComponent implements OnInit {
     } else {
       this.getNewToken();
     }
-   
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd)
-    ).subscribe((event: any) => {
-      this.checkTokenValidity(decoded);
-      console.log(decoded);
-    });
+    if(this.checkTokenValidity(decoded)) {
+      this.showForm = false;
+    } 
+ 
   }
   
 
@@ -76,8 +74,11 @@ export class AppComponent implements OnInit {
     if(currentTime > tokenExpiryTime) {
       // get new token
       this.getNewToken();
+      return false;
     }
+    return true;
   } 
+    return false;
   }
 
   getNewToken() {

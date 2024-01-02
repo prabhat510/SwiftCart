@@ -1,9 +1,10 @@
 const router = require('express').Router();
 const { ObjectId } = require("mongodb");
 const Cart  = require('../models/cartModel');
+const authVerify = require("../auth/authVerify");
 
 // get all the cart items
-router.get('/items/:userId', async (req, res)=>{
+router.get('/items/:userId', authVerify, async (req, res)=>{
     const userId = req.params.userId;
     try{
         const items = await Cart.find({userId}).populate('productId');
@@ -14,7 +15,7 @@ router.get('/items/:userId', async (req, res)=>{
     }
 })
 
-router.post('/item/exists/:userId', async (req, res)=>{
+router.post('/item/exists/:userId', authVerify, async (req, res)=>{
     const userId = req.params.userId;
     const productId = req.body.productId;
     try{
@@ -27,7 +28,7 @@ router.post('/item/exists/:userId', async (req, res)=>{
 })
 
 // add a new item in the cart
-router.post('/addItem/:userId', async (req, res)=> {
+router.post('/addItem/:userId', authVerify, async (req, res)=> {
     // userId and productId are mongodb's internal identifier
     const userId = req.params.userId;
     const productId = req.body.productId;
@@ -49,7 +50,7 @@ router.post('/addItem/:userId', async (req, res)=> {
 })
 
 // add/remove a item from the cart
-router.put('/updateItem/:userId', async(req, res)=>{
+router.put('/updateItem/:userId', authVerify, async(req, res)=>{
     const userId = req.params.userId;
     const productId = req.body.productId;
 
@@ -68,7 +69,7 @@ router.put('/updateItem/:userId', async(req, res)=>{
 })
 
 // remove item from the cart
-router.delete('/deleteItem/:userId', async(req, res)=>{
+router.delete('/deleteItem/:userId', authVerify, async(req, res)=>{
     const userId = req.params.userId;
     const productId = req.body.productId;
 

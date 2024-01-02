@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
@@ -8,8 +8,9 @@ import { Router } from '@angular/router';
   templateUrl: './register-user.component.html',
   styleUrls: ['./register-user.component.scss']
 })
-export class RegisterUserComponent implements OnInit {
+export class RegisterUserComponent implements OnInit, AfterViewInit {
 
+  @Output() hideForm: EventEmitter<any> = new EventEmitter<any>();
   userForm = {
     name: '',
     username: '',
@@ -21,6 +22,11 @@ export class RegisterUserComponent implements OnInit {
 
   ngOnInit(): void {
   }
+
+  ngAfterViewInit(): void {
+    // (document.querySelector('.form-container') as HTMLElement).style.backgroundColor = "black";    
+  }
+
   submitForm(usrForm: NgForm) {
     console.log(usrForm)
     if(usrForm.status === "VALID") {
@@ -35,9 +41,7 @@ export class RegisterUserComponent implements OnInit {
           username: res.username,
           userId: res._id
         }))
-        setTimeout(() => {
-          this.router.navigate(['']);
-        }, 500);
+        this.hideForm.emit();
       })
     } else {
       alert('please fill all the fields properly');

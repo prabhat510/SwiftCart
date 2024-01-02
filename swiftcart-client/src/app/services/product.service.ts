@@ -18,6 +18,6 @@ export class ProductService {
     const offset = queryParams.offset;
     const limit = queryParams.limit;
     const url = getServiceUrl().swiftCartApiEndpoint + `/products?offset=${offset}&limit=${limit}`;
-    return this.httpClient.get(url, {headers: new HttpHeaders({"Authorization": `Bearer ${token}`})});
+    return this.httpClient.get(url);
   }
 }

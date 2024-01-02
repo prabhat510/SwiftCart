@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -14,6 +14,7 @@ import { RegisterUserComponent } from './register-user/register-user.component';
 import { CartItemComponent } from './cart-item/cart-item.component';
 import { PaymentComponent } from './payment/payment.component';
 import { OrderSummaryComponent } from './order-summary/order-summary.component';
+import { TokenInterceptor } from './services/token-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,11 @@ import { OrderSummaryComponent } from './order-summary/order-summary.component';
     HttpClientModule,
     Ng2SearchPipeModule
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: TokenInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

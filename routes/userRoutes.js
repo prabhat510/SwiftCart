@@ -14,7 +14,7 @@ router.post("/register", async (req, res) => {
       res.json({ status: 409, message: "username already exists" });
     } else {
         const token = jwt.sign({key: "value"}, process.env.TOKEN_SECRET, {
-          expiresIn: '5m'
+          expiresIn: '600000m'
         });
         console.log('token::', token);
         const salt = await bcrypt.genSalt();

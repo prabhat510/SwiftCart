@@ -1,11 +1,20 @@
 .form-container {
     display: flex;
     justify-content: center;
+    width: 100%;
     padding: 50px 0;
+    position: fixed;
+    top: 0px;
+    left: 50%;
+    transform: translateX(-50%);
+    // inset: 0;
+    background-color: #00000080;
+    z-index: 4000;
 }
 
 .registration-form {
-    border: 1px solid gray;
+    border: 1px solid white;
     width: 400px;
     padding: 30px;
+    color: #fff;
 }

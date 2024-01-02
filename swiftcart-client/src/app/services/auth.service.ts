@@ -27,4 +27,13 @@ export class AuthService {
     const url = getServiceUrl().swiftCartApiEndpoint + '/user/token';
     return this.httpClient.get(url);
   }
+
+  getAccessToken() {
+    let token;
+    const user = localStorage.getItem('user');
+    if(user) {
+      token = JSON.parse(user).token;
+    }
+    return token;
+  }
 }

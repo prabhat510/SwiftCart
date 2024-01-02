@@ -15,6 +15,9 @@
   </nav>
 </header>
 <main>
+  <div>
+    <app-register-user *ngIf="showForm" (hideForm)="fetchDisplayProducts(); showForm=false;"></app-register-user>
+  </div>
   <div class="top-container">
     <div class="left-container">
       <div class="product-list-wrapper">
