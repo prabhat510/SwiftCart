@@ -115,8 +115,10 @@ export class AppComponent implements OnInit {
       this.cartProducts = res.items;
       this.cartItemsTotalPrice = 0;
       for(const product of res.items) {
-        this.cartItemsTotalPrice += product.productId.price * product.quantity;
-        this.totalCartItems += product.quantity;
+        if(product.productId) {
+          this.cartItemsTotalPrice += product.productId.price * product.quantity;
+          this.totalCartItems += product.quantity;
+        }
       }
       this.totalAmountWithTax= this.cartItemsTotalPrice + (this.cartItemsTotalPrice * 18)/100;
     })
@@ -201,7 +203,8 @@ export class AppComponent implements OnInit {
 
   setImageSrc() {
     for (let i = 0; i < this.products.length; i++) {
-      this.products[i].image = getServiceUrl().swiftCartApiEndpoint + '/images/' + this.products[i].image;
+      this.products[i].image = getServiceUrl().swiftCartApiEndpoint + '/images/' + this.products[i].image + '?token=' +
+      this.authService.getAccessToken();
     }
   }
 

@@ -52,6 +52,6 @@ export class CartItemComponent implements OnInit {
   }
 
   getImageSrc(imageId: string) {
-    return getServiceUrl().swiftCartApiEndpoint + '/images/' + imageId;
+    return getServiceUrl().swiftCartApiEndpoint + '/images/' + imageId + '?token=' + this.authService.getAccessToken();
   }
 }

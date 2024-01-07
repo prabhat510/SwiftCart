@@ -1,8 +1,8 @@
 const router = require('express').Router();
 const Order  = require('../models/orderModel');
-const authVerify = require("../auth/authVerify");
+const {verifyToken} = require("../auth/authVerify");
 
-router.post('/create/:userId', authVerify, async (req, res)=> {
+router.post('/create/:userId', verifyToken, async (req, res)=> {
     const userId = req.params.userId;
     const orderPayload = req.body;
     orderPayload['user'] = userId;
@@ -15,7 +15,7 @@ router.post('/create/:userId', authVerify, async (req, res)=> {
     }
 })
 
-router.get('/:orderId', authVerify, async (req, res)=> {
+router.get('/:orderId', verifyToken, async (req, res)=> {
     const orderId = req.params.orderId;
     try {
         const order = await Order.findOne({orderId: orderId});

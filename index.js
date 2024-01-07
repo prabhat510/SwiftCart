@@ -10,6 +10,7 @@ const productRoutes = require('./routes/productRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
 const imageRoutes = require('./routes/imageRoutes');
+const {imageMiddlewear} = require('./auth/authVerify');
 
 app.use(
     cors({
@@ -28,6 +29,7 @@ app.use('/api/products', productRoutes);
 app.use('/api/order', orderRoutes);
 app.use('/api/payment', paymentRoutes);
 app.use('/api/images', imageRoutes);
+app.use('/api/images', imageMiddlewear, express.static('./images'))
 
 
 

@@ -1,6 +1,6 @@
-<div class="product-container" *ngIf="cartItem">
+<div class="product-container" *ngIf="cartItem && cartItem.productId">
     <div class="image-wrapper">
-        <app-image-tile [imageUrl]="getImageSrc(cartItem.productId.image)" [title]="cartItem.productId.name"></app-image-tile>
+        <app-image-tile [imageUrl]="getImageSrc(cartItem.productId?.image)" [title]="cartItem.productId?.name"></app-image-tile>
     </div>
     <div class="product-metadata">
         <p>{{cartItem.productId.name}}</p>
@@ -10,7 +10,7 @@
                 -
             </button>
             {{quantity}}
-            <button type="button" class="btn btn-secondary" (click)="handleProductCount('added', cartItem.productId._id)">
+            <button type="button" class="btn btn-secondary" (click)="handleProductCount('added', cartItem.productId?._id)">
                 +
             </button>
         </p>

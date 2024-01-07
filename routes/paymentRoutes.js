@@ -1,9 +1,9 @@
 const router = require('express').Router();
 const Razorpay = require('razorpay');
 const Payment = require('../models/paymentModel');
-const authVerify = require("../auth/authVerify");
+const {verifyToken} = require("../auth/authVerify");
 
-router.post('/orderid', authVerify, async (req, res)=>{
+router.post('/orderid', verifyToken, async (req, res)=>{
 
     const paymentPayload = req.body;
     try {

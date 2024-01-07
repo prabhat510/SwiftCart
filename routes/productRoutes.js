@@ -1,8 +1,8 @@
 const router = require("express").Router();
 const Product  = require("../models/productModel");
-const authVerify = require("../auth/authVerify");
+const {verifyToken} = require("../auth/authVerify");
 
-router.post("/create", authVerify, async (req, res) => {
+router.post("/create", verifyToken, async (req, res) => {
   const productPayload = req.body;
   try {
     const productAlreadyPresent = await Product.findOne({
@@ -19,7 +19,7 @@ router.post("/create", authVerify, async (req, res) => {
   }
 });
 
-router.get("/", authVerify, async (req, res) => {
+router.get("/", verifyToken, async (req, res) => {
   const offset = req.query.offset;
   const limit = req.query.limit;
   try {
@@ -32,7 +32,7 @@ router.get("/", authVerify, async (req, res) => {
 });
 
 
-router.delete("/delete/:productIdentifier", authVerify, async (req, res) => {
+router.delete("/delete/:productIdentifier", verifyToken, async (req, res) => {
   try{
     const productIdentifier = req.params.productIdentifier;
     const product  = await Product.findOneAndDelete({productIdentifier});
