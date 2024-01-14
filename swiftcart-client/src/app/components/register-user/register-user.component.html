@@ -15,28 +15,32 @@
         <div class="mb-3">
             <label for="mobile" class="form-label">Mobile</label>
             <input 
-            [(ngModel)]="userForm.mobile"
+            [(ngModel)]="userForm.mobile" #mobile="ngModel"
             type="text" class="form-control" id="mobile" name="mobile" required/>
         </div>
         <div class="mb-3">
             <label for="name" class="form-label">Name</label>
             <input
-            [(ngModel)]="userForm.name"
+            [(ngModel)]="userForm.name" #name="ngModel"
              type="text" class="form-control" id="name" name="name" required/>
         </div>
         <div class="mb-3">
             <label for="username" class="form-label">Username</label>
             <input
-            [(ngModel)]="userForm.username"
+            [(ngModel)]="userForm.username" #username="ngModel"
              type="text" class="form-control" id="username" name="username" required/>
         </div>
         <div class="mb-3">
           <label for="exampleInputPassword1" class="form-label">Password</label>
-          <input type="password" class="form-control" id="exampleInputPassword1" name="password" required/>
+          <input [(ngModel)]="userForm.password" #password="ngModel"
+           type="password" class="form-control" id="exampleInputPassword1" name="password" required/>
         </div>
         <div class="mb-3 form-text">
             We'll never share your details with anyone else.
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" class="btn btn-primary w-100" [disabled]="usrForm.invalid">Submit</button>
+        <div class="mt-3 form-text">
+          already have an account? <a href="/login">Login</a>
+        </div>
       </form>
 </div>

@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 dotenv.config();  
 
-app.use('/api/user', userRoutes);
+app.use('/api/auth', userRoutes);
 app.use('/api/carts', cartRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/order', orderRoutes);

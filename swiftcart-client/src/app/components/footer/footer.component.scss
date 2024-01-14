@@ -1,0 +1,125 @@
+.footer-area {
+    background-color: #212529;
+    box-shadow: 0px 0px 2px black;
+  }
+  
+  .footer {
+    padding: 15px;
+    color: #ffffff;
+    display: flex;
+    justify-content: space-around;
+  }
+  
+  .contact-info,
+  .footer-form {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .footer-form span,
+  .contact-info span,
+  .brand-name span {
+    font-size: 18px;
+    font-weight: bolder;
+    margin-bottom: 20px;
+  }
+  
+  .brand-name span {
+    cursor: pointer;
+  }
+  
+  .contact-info a {
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: inherit;
+    text-decoration: none;
+    margin-bottom: 13px;
+  }
+  
+  .contact-info a img {
+    height: 30px;
+    width: 30px;
+  }
+  
+  .footer-form {
+    width: 400px;
+  }
+  
+  .footer-form>*:not(:last-child):not(:first-child) {
+    margin-bottom: 10px;
+    padding: 6px;
+  }
+  
+  button {
+    color: #212529;
+    border: 1px solid #ffffff;
+    background-color: #ffffff;
+    height: 35px;
+    transition: .2s;
+  }
+  
+  button:hover {
+    background-color: #333;
+    color: #ffffff;
+  }
+  
+  @media (max-width: 1023px) {
+    .footer div {
+      width: 100%;
+    }
+  
+    .footer {
+      flex-direction: column;
+      align-items: center;
+    }
+    .contacts {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      border-bottom: 1px solid #ffffff;
+    }
+    .contact-info span {
+      text-align: center;
+    }
+    .footer-form {
+      width: 400px !important;
+      margin-top: 10px;
+    }
+  }
+  
+  @media (max-width: 568px) {
+    .footer-form {
+      width: 300px !important;
+      margin-top: 10px;
+    }
+  }
+  
+  .copyright {
+    font-size: 14px;
+    text-align: center;
+    padding: 10px 0;
+    color: #ffffff;
+    border-top: 1px solid #ccc;
+  }
+  .contact-link-text {
+    position: relative;
+    transform: translate(5%, 50%);
+    font-weight:500 !important;
+  }
+  .contact-link-text::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    top: 110%;
+    height: 2px;
+    width: 0%;
+    background: #ffffff;
+    transition: 0.2s ease-out; 
+  }
+  
+  .contact-link-text:hover::after {
+    width: 100%;
+  }

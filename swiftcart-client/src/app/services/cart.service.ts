@@ -9,28 +9,29 @@ export class CartService {
 
   constructor(private httpClient: HttpClient) { }
 
-  addProductToCart(productPayload: any, userId: string) {
-    const url = getServiceUrl().swiftCartApiEndpoint + `/cart/addItem?userId=${userId}`;
+  addProductToCart(productPayload: any) {
+    const url = getServiceUrl().swiftCartApiEndpoint + `/carts/addItem`;
     return this.httpClient.post(url, productPayload);
   }
 
-  checkItemAddedToCart(productPayload: any, userId: string) {
-    const url = getServiceUrl().swiftCartApiEndpoint + `/cart/item/exists?userId=${userId}`;
+  checkItemAddedToCart(productPayload: any) {
+    const url = getServiceUrl().swiftCartApiEndpoint + `/carts/item/exists`;
     return this.httpClient.post(url, productPayload);
   }
 
-  getAllProductsInCart(userId: string) {
-    const url = getServiceUrl().swiftCartApiEndpoint + `/cart/items?userId=${userId}`;
+  getAllProductsInCart() {
+    const url = getServiceUrl().swiftCartApiEndpoint + `/carts/items`;
     return this.httpClient.get(url);
   }
 
-  updateItemQuantity(productPayload: any, userId: string) {
-    const url = getServiceUrl().swiftCartApiEndpoint + `/cart/updateItem?userId=${userId}`;
+  updateCart(productPayload: any) {
+    const url = getServiceUrl().swiftCartApiEndpoint + `/carts/update`;
     return this.httpClient.put(url, productPayload);
   }
-  
-  removeCartItem(productPayload: any, userId: string) {
-    const url = getServiceUrl().swiftCartApiEndpoint + `/cart/deleteItem?userId=${userId}`;
-    return this.httpClient.delete(url, {body: productPayload});
+
+  createUserCart(productPayload: any) {
+    const url = getServiceUrl().swiftCartApiEndpoint + `/carts/create`;
+    return this.httpClient.post(url, productPayload);
   }
+  
 }

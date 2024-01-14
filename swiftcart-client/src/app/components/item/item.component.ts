@@ -28,7 +28,7 @@ export class ItemComponent implements OnInit {
     const payload = {
       productId: this.product._id
     }
-    this.cartService.checkItemAddedToCart(payload, this.userId)
+    this.cartService.checkItemAddedToCart(payload)
     .subscribe((res:any)=>{
       if(res) {
         this.isItemAlreadyInCart = true;
@@ -43,7 +43,7 @@ export class ItemComponent implements OnInit {
         productId: this.product._id,
         quantity: 1
       };
-      this.cartService.addProductToCart(payload, this.userId)
+      this.cartService.addProductToCart(payload)
       .subscribe({
         next: (res)=>{
           this.isItemAlreadyInCart = true;

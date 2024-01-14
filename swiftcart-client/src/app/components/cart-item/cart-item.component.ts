@@ -27,7 +27,7 @@ export class CartItemComponent implements OnInit {
   handleProductCount(action:string, productId: string) {
     if(action === 'added') {
       const productPayload = {productId: productId, quantity: 1 + this.quantity};
-      this.cartService.updateItemQuantity(productPayload, this.userId)
+      this.cartService.updateCart(productPayload)
       .subscribe((res)=>{
         this.quantity += 1;
         this.updateCartEvent.emit({action: action, price: this.cartItem.productId.price});
@@ -35,7 +35,7 @@ export class CartItemComponent implements OnInit {
       })
     } else if(action === "removed") {
       const productPayload = {productId: productId, quantity: this.quantity - 1};
-      this.cartService.updateItemQuantity(productPayload, this.userId)
+      this.cartService.updateCart(productPayload)
       .subscribe((res)=>{
         this.quantity -= 1;
         this.updateCartEvent.emit({action: action, price: this.cartItem.productId.price});
@@ -46,7 +46,7 @@ export class CartItemComponent implements OnInit {
 
   removeCartItem(productId: string) {
     const productPayload = {productId: productId};
-    this.cartService.removeCartItem(productPayload, this.userId)
+    this.cartService.updateCart(productPayload)
     .subscribe((res: any)=> {
       console.log("res==....", res);
       this.removeItemEvent.emit();

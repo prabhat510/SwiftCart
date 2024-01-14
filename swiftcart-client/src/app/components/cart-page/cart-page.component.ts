@@ -35,7 +35,7 @@ export class CartPageComponent implements OnInit {
   }
 
   fetchCartProducts() {
-    this.cartService.getAllProductsInCart(this.userId)
+    this.cartService.getAllProductsInCart()
     .subscribe((res:any)=>{
       this.products = res.items;
       this.cartItemsTotalPrice = 0;

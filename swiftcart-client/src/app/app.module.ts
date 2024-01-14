@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
+import { APP_BASE_HREF } from "@angular/common";
+import { CookieService as NgxCookieService} from 'ngx-cookie-service';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -14,6 +16,11 @@ import { RegisterUserComponent } from './components/register-user/register-user.
 import { CartItemComponent } from './components/cart-item/cart-item.component';
 import { PaymentComponent } from './components/payment/payment.component';
 import { OrderSummaryComponent } from './components/order-summary/order-summary.component';
+import { LoginComponent } from './components/login/login.component';
+import { HeaderComponent } from './components/header/header.component';
+
+import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { FooterComponent } from './components/footer/footer.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +32,10 @@ import { OrderSummaryComponent } from './components/order-summary/order-summary.
     RegisterUserComponent,
     CartItemComponent,
     PaymentComponent,
-    OrderSummaryComponent
+    OrderSummaryComponent,
+    LoginComponent,
+    HeaderComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
@@ -34,7 +44,14 @@ import { OrderSummaryComponent } from './components/order-summary/order-summary.
     HttpClientModule,
     Ng2SearchPipeModule
   ],
-  providers: [],
+  providers: [NgxCookieService,
+    { provide: APP_BASE_HREF, useValue: '/' },
+    {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true,
+  },
+],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

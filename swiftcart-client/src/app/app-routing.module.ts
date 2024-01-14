@@ -6,13 +6,16 @@ import { RegisterUserComponent } from './components/register-user/register-user.
 import { CartPageComponent } from './components/cart-page/cart-page.component';
 import { PaymentComponent } from './components/payment/payment.component';
 import { OrderSummaryComponent } from './components/order-summary/order-summary.component';
+import { AuthGuard } from './guards/auth.guard';
+import { LoginComponent } from './components/login/login.component';
 
 const routes: Routes = [
   {path: '', component: ItemListingComponent},
   {path: 'register', component: RegisterUserComponent},
-  {path: 'cart', component: CartPageComponent},
-  {path: 'payment', component: PaymentComponent},
-  {path: 'order-summary', component: OrderSummaryComponent},
+  {path: 'login', component: LoginComponent},
+  {path: 'cart', component: CartPageComponent, canActivate: [AuthGuard]},
+  {path: 'payment', component: PaymentComponent, canActivate: [AuthGuard]},
+  {path: 'order-summary', component: OrderSummaryComponent, canActivate: [AuthGuard]},
 ];
 
 @NgModule({

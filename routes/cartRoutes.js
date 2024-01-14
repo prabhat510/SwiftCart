@@ -30,9 +30,9 @@ router.post('/item/exists', verifyToken, async (req, res)=>{
 })
 
 // create a new cart for a newly onboarded user(need to be called everytime a user logs in)
-router.post('/create', async (req, res)=> {
+router.post('/create', verifyToken, async (req, res)=> {
     // userId and productId are mongodb's internal identifier
-    const userId = req.query.userId;
+    const userId = req.user.userId;
     try {
         const cart = await Cart.findOne({user : new ObjectId(userId)});
         if(cart){
@@ -56,8 +56,8 @@ router.post('/create', async (req, res)=> {
     "quantity": 1
 }
  */
-router.put('/update', async(req, res)=>{
-    const userId = req.query.userId;
+router.put('/update', verifyToken, async(req, res)=>{
+    const userId = req.user.userId;
     const payload = req.body;
     console.log("query::", userId);
     try {

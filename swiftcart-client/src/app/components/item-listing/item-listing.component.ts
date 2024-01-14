@@ -1,12 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { ProductService } from '../../services/product.service';
 import { IProduct } from '../../interfaces/product.interface';
-import { getServiceUrl } from '../../utils/api.config';
 
 @Component({
   selector: 'app-item-listing',
   templateUrl: './item-listing.component.html',
-  styleUrls: ['./item-listing.component.scss']
+  styleUrls: ['./item-listing.component.scss'],
 })
 export class ItemListingComponent implements OnInit {
 
