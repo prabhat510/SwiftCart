@@ -1,8 +1,9 @@
 const router = require('express').Router();
 const Razorpay = require('razorpay');
 const Payment = require('../models/paymentModel');
+const verifyToken = require('../auth/authVerify');
 
-router.post('/orderid', async (req, res)=>{
+router.post('/orderid', verifyToken, async (req, res)=>{
 
     const paymentPayload = req.body;
     try {
@@ -34,8 +35,8 @@ router.post('/orderid', async (req, res)=>{
 router.post('/status', async (req, res)=>{
     const paymentStatusPayload = req.body;
     try {
-      console.log("pauload", paymentStatusPayload);
-      const payment = await Payment.create({
+      console.log("razorpay payment payload::", paymentStatusPayload);
+      await Payment.create({
         statuscode: paymentStatusPayload.status_code, 
         paymentId: paymentStatusPayload.razorpay_payment_id,
         orderId: paymentStatusPayload.razorpay_order_id,

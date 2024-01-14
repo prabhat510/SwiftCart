@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CartService } from '../services/cart.service';
-import { AuthService } from '../services/auth.service';
-import { ICartItem } from '../interfaces/cartitem.interface'; 
+import { CartService } from '../../services/cart.service';
+import { AuthService } from '../../services/auth.service';
+import { ICartItem } from '../../interfaces/cartitem.interface'; 
+import { GlobalUtil } from 'src/app/utils/global.util';
 @Component({
   selector: 'app-cart-item',
   templateUrl: './cart-item.component.html',
@@ -10,10 +11,12 @@ import { ICartItem } from '../interfaces/cartitem.interface';
 export class CartItemComponent implements OnInit {
   userId :string;
   quantity = 1;
+  globalUtil: GlobalUtil;
   @Input() cartItem: ICartItem;
   @Output() removeItemEvent: EventEmitter<any> = new EventEmitter<any>();
   @Output() updateCartEvent: EventEmitter<any> = new EventEmitter<any>();
   constructor(private cartService: CartService, private authService: AuthService) { 
+    this.globalUtil = new GlobalUtil();
   }
 
   ngOnInit(): void {

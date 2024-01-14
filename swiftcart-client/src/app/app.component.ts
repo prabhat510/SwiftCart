@@ -36,6 +36,8 @@ export class AppComponent implements OnInit {
       this.checkTokenValidity(decoded);
       console.log(decoded);
     });
+
+    fetch('https://drive.google.com/file/d/18KV4u_06arPbCROhooI1JbWFx6pPx8Ox/view').then(res=>console.log(res))
   }
   
   search() {

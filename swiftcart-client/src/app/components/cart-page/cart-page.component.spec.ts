@@ -1,10 +1,10 @@
 import { ComponentFixture, TestBed, inject } from '@angular/core/testing';
 import { HttpClientModule } from '@angular/common/http';
-import { ProductService } from '../services/product.service';
+import { ProductService } from '../../services/product.service';
 
 import { CartPageComponent } from './cart-page.component';
-import { OrderService } from '../services/order.service';
-import { CartService } from '../services/cart.service';
+import { OrderService } from '../../services/order.service';
+import { CartService } from '../../services/cart.service';
 import { of } from 'rxjs';
 
 const productData = {

@@ -1,6 +1,6 @@
 <div class="product-container" *ngIf="product">
     <div class="product-image">
-        <app-image-tile [imageUrl]="product.image" [title]="product.name"></app-image-tile>
+        <app-image-tile [imageUrl]="util.getImageSrc(product._id)" [title]="product.name"></app-image-tile>
     </div>
 
     <div class="product-metadata">

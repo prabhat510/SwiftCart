@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { OrderService } from '../services/order.service';
-import { ProductService } from '../services/product.service';
+import { OrderService } from '../../services/order.service';
+import { ProductService } from '../../services/product.service';
 
 
 @Component({

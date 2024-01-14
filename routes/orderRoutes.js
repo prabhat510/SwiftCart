@@ -1,13 +1,13 @@
 const router = require('express').Router();
 const Order  = require('../models/orderModel');
-const { ObjectId } = require("mongodb");
+const verifyToken = require('../auth/authVerify');
 
-router.post('/create/:userId', async (req, res)=> {
-    const userId = req.params.userId;
+router.post('/create', verifyToken, async (req, res)=> {
+    const userId = req.user.userId;
     const orderPayload = req.body;
     orderPayload['user'] = userId;
     try {
-        console.log('create order', orderPayload);
+        console.log('creating order::payload', orderPayload);
         const addedProduct = await Order.create(orderPayload);
         res.status(200).json(addedProduct);
     } catch (error) {
@@ -15,7 +15,7 @@ router.post('/create/:userId', async (req, res)=> {
     }
 })
 
-router.get('/:orderId', async (req, res)=> {
+router.get('/:orderId', verifyToken, async (req, res)=> {
     const orderId = req.params.orderId;
     try {
         const order = await Order.findOne({orderId: orderId});

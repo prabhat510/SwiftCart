@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { CartService } from '../services/cart.service';
-import { AuthService } from '../services/auth.service';
-import { OrderService } from '../services/order.service';
-import { ProductService } from '../services/product.service';
-import { IOrder } from '../interfaces/order.interface';
+import { CartService } from '../../services/cart.service';
+import { AuthService } from '../../services/auth.service';
+import { OrderService } from '../../services/order.service';
+import { ProductService } from '../../services/product.service';
+import { IOrder } from '../../interfaces/order.interface';
 
 @Component({
   selector: 'app-cart-page',
@@ -40,14 +40,16 @@ export class CartPageComponent implements OnInit {
       this.products = res.items;
       this.cartItemsTotalPrice = 0;
       for(const product of res.items) {
-        this.orderSummary.items.push(
-          {
-            productId: product.productId._id, 
-            productName: product.productId.name,
-            quantity: product.quantity, 
-            price: product.productId.price 
-          })
-        this.cartItemsTotalPrice += product.productId.price * product.quantity;
+        if(product.productId) {
+          this.orderSummary.items.push(
+            {
+              productId: product.productId._id, 
+              productName: product.productId.name,
+              quantity: product.quantity, 
+              price: product.productId.price 
+            })
+          this.cartItemsTotalPrice += product.productId.price * product.quantity;
+        }
         this.totalCartItems += product.quantity;
       }
       this.orderSummary.totalAmount = this.cartItemsTotalPrice + (this.cartItemsTotalPrice * 18)/100;

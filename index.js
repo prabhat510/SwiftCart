@@ -9,7 +9,6 @@ const cartRoutes = require('./routes/cartRoutes');
 const productRoutes = require('./routes/productRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
-const imageRoutes = require('./routes/imageRoutes');
 
 app.use(
     cors({
@@ -23,12 +22,11 @@ app.use(bodyParser.urlencoded({ extended: true }));
 dotenv.config();  
 
 app.use('/api/user', userRoutes);
-app.use('/api/cart', cartRoutes);
+app.use('/api/carts', cartRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/order', orderRoutes);
 app.use('/api/payment', paymentRoutes);
-app.use('/api/images', imageRoutes);
-
+app.use('/api/images', express.static('./images'))
 
 
 app.get('api/status', (req, res)=>{

@@ -1,8 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { CartService } from '../services/cart.service';
-import { AuthService } from '../services/auth.service';
+import { CartService } from '../../services/cart.service';
+import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
-import { IProduct } from '../interfaces/product.interface'; 
+import { IProduct } from '../../interfaces/product.interface'; 
+import { GlobalUtil } from 'src/app/utils/global.util';
 
 @Component({
   selector: 'app-item',
@@ -14,8 +15,12 @@ export class ItemComponent implements OnInit {
   @Input() product: IProduct; 
   isItemAlreadyInCart = false;
   userId!:string;
+  util: GlobalUtil;
 
-  constructor(private cartService: CartService, private authService: AuthService, private router: Router) { }
+  constructor(private cartService: CartService, private authService: AuthService,
+      private router: Router) {
+        this.util = new GlobalUtil();
+      }
 
   ngOnInit(): void {
     console.log('ngOnInit::');

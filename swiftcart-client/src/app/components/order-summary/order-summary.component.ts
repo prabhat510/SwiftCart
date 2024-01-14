@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {jsPDF} from 'jspdf';
-import { OrderService } from '../services/order.service';
+import { OrderService } from '../../services/order.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
