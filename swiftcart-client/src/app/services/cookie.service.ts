@@ -10,7 +10,6 @@ export class CookieService {
 
   setCookie(key: string, value: string): void {
     this.ngxCookie.put(key, value);
-    // document.cookie = `${key}=${value}; expires=Sun, 20 Jul 2025 19:45:00 UTC; path=/`;
   }
 
   getCookie(key: string):string {
