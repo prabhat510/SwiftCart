@@ -2,8 +2,7 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
-import { APP_BASE_HREF } from "@angular/common";
-import { CookieService as NgxCookieService} from 'ngx-cookie-service';
+import { CookieModule } from 'ngx-cookie';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -38,15 +37,14 @@ import { FooterComponent } from './components/footer/footer.component';
     FooterComponent
   ],
   imports: [
+    CookieModule.withOptions(),
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
     Ng2SearchPipeModule
   ],
-  providers: [NgxCookieService,
-    { provide: APP_BASE_HREF, useValue: '/' },
-    {
+  providers: [{
     provide: HTTP_INTERCEPTORS,
     useClass: AuthInterceptor,
     multi: true,
