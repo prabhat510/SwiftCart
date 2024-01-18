@@ -7,7 +7,7 @@ const verifyToken = require('../auth/authVerify')
 router.get('/items', verifyToken, async (req, res)=>{
     const userId = req.user.userId;
     try{
-        const items = await Cart.find({user: userId}).populate('items.product');
+        const items = await Cart.find({user: userId}).populate('items items.product items.quantity');
         console.log(items);
         res.status(200).json({data: items[0]});
     } catch (e) {
@@ -68,12 +68,38 @@ router.put('/update', verifyToken, async(req, res)=>{
         const itemExists = cart.items.find((item)=> item.product.toString() === payload.productId);
         console.log('itemExists', itemExists);
         if(itemExists) {
-            itemExists.quantity +=  payload.quantity || 1;
+            itemExists.quantity =  payload.quantity || 1;
         } else {
             cart.items.push({product: payload.productId, quantity: payload.quantity || 1});
         }
         await cart.save();
         res.status(200).json(cart);
+    } catch (error) {
+        res.status(500).send('server error');
+    }
+})
+
+/**
+ * payload:: {
+    "productId": "65871718381350d6ce3e5bcc",
+}
+ */
+
+router.delete('/remove', verifyToken, async(req, res)=>{
+    const userId = req.user.userId;
+    const payload = req.body;
+    console.log("query::", userId);
+    console.log("query::", payload.productId);
+    try {
+        const cart = await Cart.findOne({user : new ObjectId(userId)});
+        if(!cart){
+           return res.json({ status: 404, message: "can't update as the cart doesnot exists" });
+        } 
+        console.log('cart items before', cart.items.length, cart.items);
+        cart.items = cart.items.filter((item)=> item.product.toString() !== payload.productId);
+        await cart.save();
+        console.log('cart items after', cart.items.length, cart.items);
+        res.status(200).json({message: "item removed successfully"});
     } catch (error) {
         res.status(500).send('server error');
     }

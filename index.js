@@ -10,11 +10,7 @@ const productRoutes = require('./routes/productRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
 
-app.use(
-    cors({
-      origin: "*",
-    })
-  );
+app.use(cors({origin: "*"}));
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

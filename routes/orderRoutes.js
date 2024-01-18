@@ -18,7 +18,7 @@ router.post('/create', verifyToken, async (req, res)=> {
 router.get('/:orderId', verifyToken, async (req, res)=> {
     const orderId = req.params.orderId;
     try {
-        const order = await Order.findOne({orderId: orderId});
+        const order = await Order.findOne({orderId: orderId}).populate('user');
         res.status(200).json(order);
     } catch (error) {
         res.status(500).send('server error');
