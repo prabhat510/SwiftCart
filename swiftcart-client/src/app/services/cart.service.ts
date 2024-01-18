@@ -33,5 +33,10 @@ export class CartService {
     const url = getServiceUrl().swiftCartApiEndpoint + `/carts/create`;
     return this.httpClient.post(url, productPayload);
   }
+
+  removeCartItem(productPayload: any) {
+    const url = getServiceUrl().swiftCartApiEndpoint + `/carts/remove`;
+    return this.httpClient.delete(url, {body: productPayload});
+  }
   
 }

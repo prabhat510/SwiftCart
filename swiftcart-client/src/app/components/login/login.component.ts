@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { CartService } from 'src/app/services/cart.service';
 
 @Component({
   selector: 'app-login',
@@ -13,7 +14,7 @@ export class LoginComponent implements OnInit {
     username: '',
     password: ''
   }
-  constructor(private authService: AuthService, private router: Router) { }
+  constructor(private authService: AuthService, private router: Router, private cartService: CartService) { }
 
   ngOnInit(): void {
   }
@@ -24,8 +25,19 @@ export class LoginComponent implements OnInit {
       this.authService.loginUser(this.loginForm)
       .subscribe((res: any)=>{
         console.log('login success::', res)
-        this.router.navigate(['']);
+        this.router.navigateByUrl("/");
+        this.createUserCart();
+        setTimeout(() => {
+          window.location.reload();
+        }, 500);
       })
     }
+  }
+
+  createUserCart() {
+    this.cartService.createUserCart({}).subscribe({
+      next:  (res)=>console.log("cart created successfully"),
+      error: (error)=>{console.log("cart already exists")}
+    })
   }
 }

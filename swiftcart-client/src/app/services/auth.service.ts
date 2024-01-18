@@ -21,13 +21,9 @@ export class AuthService {
     return this.httpClient.post(url, userPayload);
   }
 
-  getUserId() {
-    let userId;
-    const user = localStorage.getItem('user');
-    if(user) {
-      userId = JSON.parse(user).userId;
-    }
-    return userId;
+  getUserId():string {
+    const user = this.getUserProfile();
+    return user ? user.userId : '';
   }
 
   refreshTokens(): Promise<string> {
@@ -99,7 +95,7 @@ export class AuthService {
 
   getNewAccessToken(data: object) {
     const url = `${getServiceUrl().authApiEndpoint}/token`;
-    return this.httpClient.post(url, data);
+    return this.httpClient.post(url, data, { withCredentials: true});
   }
 
   loginUser(user: object) {

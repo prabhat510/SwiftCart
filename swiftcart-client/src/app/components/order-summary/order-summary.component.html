@@ -1,20 +1,20 @@
 <div>
-    <p style="text-align: center; margin-top: 30px;">Your Order has been placed successfully</p>
+    <p style="text-align: center; margin-top: 30px;">Hi {{displayName}}, Your Order has been placed successfully</p>
     <hr>
     <div style="padding-left: 100px;">
-        <div *ngFor="let product of orderData.items" >
-            <p><span class="placeholder">product id:</span>{{product.productId}}</p>
-            <p><span class="placeholder">item:</span>{{product.productName}}</p>
-            <p><span class="placeholder">price:</span>{{ 'Rs. ' + product.price}}</p>
+        <div *ngFor="let item of orderData.items" >
+            <p><span class="placeholder">product id:</span>{{item.product._id}}</p>
+            <p><span class="placeholder">item:</span>{{item.product.name}}</p>
+            <p><span class="placeholder">price:</span>{{ 'Rs. ' + item.product.price}}</p>
             <hr>
         </div>
         <div>
-            <p><span class="placeholder fw-bold">Total Amount:</span>{{ 'Rs. ' + orderData.totalAmount}}</p>
+            <p><span class="placeholder fw-bold">Total Amount:</span>{{ 'Rs. ' + orderData.amount}}</p>
             <p><span class="placeholder fw-bold">Address:</span>{{ orderData.shippingAddress}}</p>
         </div>
     </div>
-    <div style="text-align: center;">
-        <button type="button" class="btn btn-primary" (click)="generateAndOpenPDF(orderData)">generate invoice</button>
+    <div style="text-align: center;" class="mb-2">
+        <button type="button" class="btn btn-primary" (click)="generateAndOpenPDF()">generate invoice</button>
     </div>
 </div>
 

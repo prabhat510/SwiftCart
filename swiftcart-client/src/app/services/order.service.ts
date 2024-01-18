@@ -7,7 +7,6 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root'
 })
 export class OrderService {
-  cartItemsTotalPrice$ = new BehaviorSubject<number>(0);
   constructor(private httpClient: HttpClient) { }
 
   createOrderId(paymentPayload: any) {
@@ -15,8 +14,8 @@ export class OrderService {
     return this.httpClient.post(url, paymentPayload);
   }
 
-  createOrder(orderPayload: any, userId: string) {
-    const url = getServiceUrl().swiftCartApiEndpoint + '/order/create/' + userId;
+  createOrder(orderPayload: any) {
+    const url = getServiceUrl().swiftCartApiEndpoint + '/order/create';
     return this.httpClient.post(url, orderPayload);
   }
 

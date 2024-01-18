@@ -14,7 +14,7 @@ export class ItemComponent implements OnInit {
 
   @Input() product: IProduct; 
   isItemAlreadyInCart = false;
-  userId!:string;
+  userId:string;
   util: GlobalUtil;
 
   constructor(private cartService: CartService, private authService: AuthService,
@@ -43,7 +43,7 @@ export class ItemComponent implements OnInit {
         productId: this.product._id,
         quantity: 1
       };
-      this.cartService.addProductToCart(payload)
+      this.cartService.updateCart(payload)
       .subscribe({
         next: (res)=>{
           this.isItemAlreadyInCart = true;

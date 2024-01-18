@@ -11,7 +11,7 @@ import { IOrder } from '../../interfaces/order.interface';
   styleUrls: ['./cart-page.component.scss']
 })
 export class CartPageComponent implements OnInit {
-  products: Array<any> = [];
+  items: Array<any> = [];
   userId:string;
   cartItemsTotalPrice = 0;
   totalCartItems = 0;
@@ -37,24 +37,24 @@ export class CartPageComponent implements OnInit {
   fetchCartProducts() {
     this.cartService.getAllProductsInCart()
     .subscribe((res:any)=>{
-      this.products = res.items;
+      this.items = res.data?.items;
       this.cartItemsTotalPrice = 0;
-      for(const product of res.items) {
-        if(product.productId) {
+      console.log("items:::", res);
+      for(const item of this.items) {
+        if(item && item.product) {
           this.orderSummary.items.push(
             {
-              productId: product.productId._id, 
-              productName: product.productId.name,
-              quantity: product.quantity, 
-              price: product.productId.price 
+              productId: item.product._id, 
+              productName: item.product.name,
+              quantity: item.quantity, 
+              price: item.product.price 
             })
-          this.cartItemsTotalPrice += product.productId.price * product.quantity;
+          this.cartItemsTotalPrice += item.product.price * item.quantity;
         }
-        this.totalCartItems += product.quantity;
+        this.totalCartItems += item.quantity;
       }
       this.orderSummary.totalAmount = this.cartItemsTotalPrice + (this.cartItemsTotalPrice * 18)/100;
-      this.orderService.cartItemsTotalPrice$.next(this.orderSummary.totalAmount);
-      console.log('cart response', res, this.products);
+      console.log('cart response', res, this.items);
     })
   }
 
@@ -65,10 +65,6 @@ export class CartPageComponent implements OnInit {
     } else if(event.action === 'removed') {
       this.cartItemsTotalPrice -= event.price;
     }
-    this.orderService.cartItemsTotalPrice$.next(this.cartItemsTotalPrice + (this.cartItemsTotalPrice * 18)/100);
-  }
-  onCheckout() {
-    this.productService.orderSummary$.next(this.orderSummary);
   }
 
 }

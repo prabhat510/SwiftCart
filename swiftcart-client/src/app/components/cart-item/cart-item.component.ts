@@ -1,8 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { CartService } from '../../services/cart.service';
-import { AuthService } from '../../services/auth.service';
-import { ICartItem } from '../../interfaces/cartitem.interface'; 
 import { GlobalUtil } from 'src/app/utils/global.util';
+import { ICartItem } from '../../interfaces/cartitem.interface';
+import { AuthService } from '../../services/auth.service';
+import { CartService } from '../../services/cart.service';
 @Component({
   selector: 'app-cart-item',
   templateUrl: './cart-item.component.html',
@@ -22,6 +22,7 @@ export class CartItemComponent implements OnInit {
   ngOnInit(): void {
     this.userId = this.authService.getUserId();
     this.quantity = this.cartItem.quantity;
+    console.log("cartItem::::", this.cartItem);
   }
 
   handleProductCount(action:string, productId: string) {
@@ -30,7 +31,7 @@ export class CartItemComponent implements OnInit {
       this.cartService.updateCart(productPayload)
       .subscribe((res)=>{
         this.quantity += 1;
-        this.updateCartEvent.emit({action: action, price: this.cartItem.productId.price});
+        this.updateCartEvent.emit({action: action, price: this.cartItem.product.price});
         console.log('count increased::', res);
       })
     } else if(action === "removed") {
@@ -38,7 +39,7 @@ export class CartItemComponent implements OnInit {
       this.cartService.updateCart(productPayload)
       .subscribe((res)=>{
         this.quantity -= 1;
-        this.updateCartEvent.emit({action: action, price: this.cartItem.productId.price});
+        this.updateCartEvent.emit({action: action, price: this.cartItem.product.price});
         console.log('count decreased::', res);
       })
     }
@@ -46,10 +47,17 @@ export class CartItemComponent implements OnInit {
 
   removeCartItem(productId: string) {
     const productPayload = {productId: productId};
-    this.cartService.updateCart(productPayload)
+    this.cartService.removeCartItem(productPayload)
     .subscribe((res: any)=> {
       console.log("res==....", res);
       this.removeItemEvent.emit();
     });
   }
 }
+
+
+/**
+ * payment:: generate orderid:::use this orderId to create a new order::
+ * if payment succeeds we can use this order Id to fetch the order and save payment record with orderId
+ *  on the summary page and generate reciept
+ */

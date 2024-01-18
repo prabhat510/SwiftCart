@@ -12,7 +12,7 @@ const paymentRoutes = require('./routes/paymentRoutes');
 
 app.use(
     cors({
-      origin: "*",
+      origin: "http://localhost:4200",
     })
   );
 

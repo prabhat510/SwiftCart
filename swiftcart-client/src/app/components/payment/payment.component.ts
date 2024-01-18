@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { OrderService } from '../../services/order.service';
-import { ProductService } from '../../services/product.service';
+import { CartService } from 'src/app/services/cart.service';
 
 
 @Component({
@@ -11,7 +11,7 @@ import { ProductService } from '../../services/product.service';
 })
 export class PaymentComponent implements OnInit {
   totalAmount = 0;
-  orderId!:string;
+  orderId:string;
   options = {
     key: "rzp_test_Vsyn9DFkRneYcm", // Enter the Key ID generated from the Dashboard
     amount: "100", // Amount is in currency subunits. Default currency is INR. Hence, 50000 refers to 50000 paise
@@ -40,12 +40,13 @@ export class PaymentComponent implements OnInit {
     shipment:'',
     billing: ''
   }
-  orderData:any;
-  constructor(private productService: ProductService, private orderService: OrderService) { }
+  orderedItems: Array<any>;
+  constructor(private orderService: OrderService,
+    private cartService: CartService
+    ) { }
 
   ngOnInit(): void {
-    this.orderService.cartItemsTotalPrice$.subscribe((amount: any)=>  this.totalAmount = amount);
-    this.productService.orderSummary$.subscribe(res=>  {this.orderData = res; console.log('observable res::', res);});
+    this.fetchOrderData();
   }
   submitForm(form: NgForm) {
     
@@ -55,17 +56,7 @@ export class PaymentComponent implements OnInit {
         this.options.amount = `${this.totalAmount*100}`;
         this.options.order_id = res.id;
         this.setRazorPayScriptsInDOM();
-        const orderPayload = {
-          user: this.orderData.userId,
-          totalAmount: this.orderData.totalAmount,
-          items: this.orderData.items,
-          shippingAddress: this.adressForm.shipment,
-          orderId: res.id
-        }
-        this.orderService.createOrder(orderPayload, this.orderData.userId).subscribe((res)=>{
-          console.log('order created::', res);
-        });
-        localStorage.setItem("address", JSON.stringify(this.adressForm));
+        this.createOrder();
     }) 
     } else {
       alert('please fill all the fields properly');
@@ -96,6 +87,29 @@ export class PaymentComponent implements OnInit {
     const scriptContent = document.createTextNode(razorpayClientScript);
     script.appendChild(scriptContent);
     body.appendChild(script);
+  }
+
+  fetchOrderData() {
+    this.cartService.getAllProductsInCart()
+    .subscribe((res: any)=>{
+      console.log("response::", res);
+      const items = res.data.items;
+      this.orderedItems = items;
+      items.forEach(item=> this.totalAmount = this.totalAmount + (item.product.price * item.quantity));
+      this.totalAmount += (this.totalAmount * 18)/100;
+    })
+  }
+
+  createOrder() {
+    const orderPayload = {
+      totalAmount: this.totalAmount,
+      items: this.orderedItems,
+      shippingAddress: this.adressForm.shipment,
+      orderId: this.options.order_id
+    }
+    this.orderService.createOrder(orderPayload).subscribe((res)=>{
+      console.log('order created::', res);
+    });
   }
 }
 

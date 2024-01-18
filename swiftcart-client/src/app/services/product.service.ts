@@ -8,7 +8,6 @@ import { Subject, BehaviorSubject } from 'rxjs';
 })
 export class ProductService {
   searchTerm = new Subject<string>();
-  orderSummary$ = new BehaviorSubject<any>({});
   constructor(private httpClient: HttpClient) {
 
    }
