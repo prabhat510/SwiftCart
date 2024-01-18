@@ -25,7 +25,7 @@ app.use('/api/payment', paymentRoutes);
 app.use('/api/images', express.static('./images'))
 
 
-app.get('api/status', (req, res)=>{
+app.get('/api/status', (req, res)=>{
   res.status(200).send("ok");
 })
 
