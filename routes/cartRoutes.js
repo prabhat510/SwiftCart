@@ -7,9 +7,9 @@ const verifyToken = require('../auth/authVerify')
 router.get('/items', verifyToken, async (req, res)=>{
     const userId = req.user.userId;
     try{
-        const items = await Cart.find({user: userId}).populate('items');
+        const items = await Cart.find({user: userId}).populate('items.product');
         console.log(items);
-        res.status(200).json({items});
+        res.status(200).json({data: items[0]});
     } catch (e) {
         res.status(500).json({msg: "Internal server error"});
     }
