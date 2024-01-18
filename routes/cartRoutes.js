@@ -7,7 +7,7 @@ const verifyToken = require('../auth/authVerify')
 router.get('/items', verifyToken, async (req, res)=>{
     const userId = req.user.userId;
     try{
-        const items = await Cart.find({userId}).populate('items');
+        const items = await Cart.find({user: userId}).populate('items');
         console.log(items);
         res.status(200).json({items});
     } catch (e) {
