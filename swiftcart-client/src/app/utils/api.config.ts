@@ -3,17 +3,17 @@ export function getServiceUrl(env?: string) {
       case "dev":
         return {
           swiftCartApiEndpoint: "http://localhost:3000/api",
-          authApiEndpoint: "https://jwt-authservice-production.up.railway.app",
+          authApiEndpoint: "https://jwt-authservice-production.up.railway.app/api/auth",
         };
       case "prod":
         return {
           swiftCartApiEndpoint: "http://localhost:3000/api",
-          authApiEndpoint: "https://jwt-authservice-production.up.railway.app",
+          authApiEndpoint: "https://jwt-authservice-production.up.railway.app/api/auth",
         };
       default:
         return {
           swiftCartApiEndpoint: "http://localhost:3000/api",
-          authApiEndpoint: "https://jwt-authservice-production.up.railway.app",
+          authApiEndpoint: "https://jwt-authservice-production.up.railway.app/api/auth",
         };
     }
 
