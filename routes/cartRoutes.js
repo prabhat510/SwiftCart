@@ -31,7 +31,6 @@ router.post('/item/exists', verifyToken, async (req, res)=>{
 
 // create a new cart for a newly onboarded user(need to be called everytime a user logs in)
 router.post('/create', verifyToken, async (req, res)=> {
-    // userId and productId are mongodb's internal identifier
     const userId = req.user.userId;
     try {
         const cart = await Cart.findOne({user : new ObjectId(userId)});
@@ -49,8 +48,9 @@ router.post('/create', verifyToken, async (req, res)=> {
     }
 })
 
-// add/remove a item from the cart
+
 /**
+ * update quantity of an item in the cart
  * payload:: {
     "productId": "65871718381350d6ce3e5bcc",
     "quantity": 1
@@ -80,6 +80,7 @@ router.put('/update', verifyToken, async(req, res)=>{
 })
 
 /**
+ * delete a single item from cart
  * payload:: {
     "productId": "65871718381350d6ce3e5bcc",
 }
@@ -105,5 +106,36 @@ router.delete('/remove', verifyToken, async(req, res)=>{
     }
 })
 
+// delete all items in cart
+router.delete('/remove/all', verifyToken, async(req, res)=>{
+    const userId = req.user.userId;
+    try {
+        const cart = await Cart.findOne({user : new ObjectId(userId)});
+        if(!cart){
+           return res.status(404).send("cart doesnot exists");
+        } 
+        console.log('cart items before', cart.items.length, cart.items);
+        cart.items = [];
+        await cart.save();
+        console.log('cart items after', cart.items.length, cart.items);
+        res.status(200).send("cart cleared successfully");
+    } catch (error) {
+        res.status(500).send('server error');
+    }
+})
+
+router.get('/count', verifyToken, async (req, res)=>{
+    const userId = req.user.userId;
+    try{
+        const cart = await Cart.findOne({user: userId}).populate('items');
+        if(cart) {
+            res.status(200).json({count: cart.items.length});
+        } else {
+            res.status(404).send("cart not found");
+        }
+    } catch (e) {
+        res.status(500).json({msg: "Internal server error"});
+    }
+})
 
 module.exports = router;

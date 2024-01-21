@@ -12,7 +12,16 @@ const paymentSchema = new mongoose.Schema({
   statuscode: String,
   paymentId: String,
   orderId: String,
-  signature: String
+  signature: String,
+  verificationStatus: {
+    type: String,
+    default: 'pending',
+    required: true
+  }, // success, failed, pending,
+  remarks: {
+    type: String,
+    default: ''
+  }
 });
 
 

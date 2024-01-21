@@ -10,7 +10,7 @@ router.post("/register", async (req, res) => {
     });
     console.log('userAlreadyPresent', userAlreadyPresent);
     if (userAlreadyPresent) {
-      res.json({ status: 409, message: "username already exists" });
+      res.status(409).json({message: "username already exists" });
     } else {
         const salt = await bcrypt.genSalt();
         const hashedPassword = await bcrypt.hash(userPayload.password, salt);
