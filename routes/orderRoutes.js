@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const Order  = require('../models/orderModel');
 const verifyToken = require('../auth/authVerify');
+const { ObjectId } = require("mongodb");
 
 router.post('/create', verifyToken, async (req, res)=> {
     const userId = req.user.userId;
@@ -15,6 +16,17 @@ router.post('/create', verifyToken, async (req, res)=> {
     }
 })
 
+// get list of orders for a particular user
+router.get('/list', verifyToken, async (req, res)=> {
+    const userId = req.user.userId;
+    try {
+        const orders = await Order.find({user: new ObjectId(userId)});
+        return res.status(200).json(orders);
+    } catch (error) {
+        res.status(500).send('server error');
+    }
+})
+
 router.get('/:orderId', verifyToken, async (req, res)=> {
     const orderId = req.params.orderId;
     try {
@@ -24,5 +36,6 @@ router.get('/:orderId', verifyToken, async (req, res)=> {
         res.status(500).send('server error');
     }
 })
+
 
 module.exports = router;

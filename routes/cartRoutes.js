@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const { ObjectId } = require("mongodb");
 const Cart  = require('../models/cartModel');
-const verifyToken = require('../auth/authVerify')
+const verifyToken = require('../auth/authVerify');
 
 // get all the cart items
 router.get('/items', verifyToken, async (req, res)=>{
@@ -50,7 +50,7 @@ router.post('/create', verifyToken, async (req, res)=> {
 
 
 /**
- * update quantity of an item in the cart
+ * if items exists update quantity of an item in the cart, else push the item to the cart
  * payload:: {
     "productId": "65871718381350d6ce3e5bcc",
     "quantity": 1
@@ -106,16 +106,20 @@ router.delete('/remove', verifyToken, async(req, res)=>{
     }
 })
 
-// delete all items in cart
-router.delete('/remove/all', verifyToken, async(req, res)=>{
+// delete all items which belong to the given orderId
+router.delete('/remove/items', verifyToken, async(req, res)=>{
     const userId = req.user.userId;
+    const order_id = req.body.order_id;
+    console.log("order id is::", order_id);
     try {
         const cart = await Cart.findOne({user : new ObjectId(userId)});
         if(!cart){
            return res.status(404).send("cart doesnot exists");
         } 
         console.log('cart items before', cart.items.length, cart.items);
-        cart.items = [];
+        cart.items = cart.items.filter((item)=>{
+           return item.orderId !== order_id;
+        })
         await cart.save();
         console.log('cart items after', cart.items.length, cart.items);
         res.status(200).send("cart cleared successfully");
@@ -124,12 +128,28 @@ router.delete('/remove/all', verifyToken, async(req, res)=>{
     }
 })
 
+// get the count of items in the cart
 router.get('/count', verifyToken, async (req, res)=>{
     const userId = req.user.userId;
     try{
         const cart = await Cart.findOne({user: userId}).populate('items');
         if(cart) {
             res.status(200).json({count: cart.items.length});
+        } else {
+            res.status(404).send("cart not found");
+        }
+    } catch (e) {
+        res.status(500).json({msg: "Internal server error"});
+    }
+})
+
+router.put('/update/:orderId', async (req, res)=>{
+    const userId = req.user.userId;
+    try{
+        const cart = await Cart.findOne({user: userId});
+        if(cart) {
+            cart.items
+            // res.status(200).json({count: cart.items.length});
         } else {
             res.status(404).send("cart not found");
         }

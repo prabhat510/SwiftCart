@@ -6,6 +6,7 @@ const cartItemSchema = new mongoose.Schema({
       ref: 'Product', // Reference to the Product model
       required: true,
     },
+    orderId: String,
     quantity: {
       type: Number,
       default: 1,
