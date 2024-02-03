@@ -95,7 +95,6 @@ router.post("/user/reset", async (req, res) => {
     if (!user) {
       return res.status(404).send("email not present");
     }
-    console.log("email to::", user.email);
     const transporter = nodemailer.createTransport({
       host: "smtp-relay.brevo.com",
       port: 587,
@@ -120,8 +119,11 @@ router.post("/user/reset", async (req, res) => {
           console.error(error);
           res.status(500).send("Internal Server Error");
         } else {
+          console.log("email to::", user.email);
+          console.log("template::", body);
+          console.log("response::", response);
           const info = await transporter.sendMail({
-            from: '"Swiftcart 👻" <no-reply@swiftcart.com>', // sender address
+            from: '"Swiftcart 👻" <noreply@swiftcart.com>', // sender address
             to: user.email, // comma separated list of receivers
             subject: "Password Reset Request for Your Account at Swiftcart.com", // Subject line
             text: "Hello world?", // plain text body
@@ -141,14 +143,14 @@ router.post("/get-reset-password-email-template", (req, res) => {
   const user = payload.user;
   const resetLink = payload.link;
   const expirationTime = "24 hours";
-
+  console.log("email template route payload", payload);
   // Render the email template
   ejs.renderFile(
     path.join(__dirname, "..", "views", "resetpasswordtemplate.ejs"),
     { user, resetLink, expirationTime },
     (err, html) => {
       if (err) {
-        console.error(err);
+        console.error("error in generating template::", err);
         res.status(500).send("Internal Server Error");
       } else {
         res.send(html);
