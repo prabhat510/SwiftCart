@@ -42,7 +42,7 @@ router.delete("/delete/:productIdentifier", async (req, res) => {
   }
 })
 
-router.delete("/product/:productIdentifier", async (req, res) => {
+router.get("/:productIdentifier", async (req, res) => {
   try{
     const productIdentifier = req.params.productIdentifier;
     const product  = await Product.find({productIdentifier});
