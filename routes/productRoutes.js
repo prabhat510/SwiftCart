@@ -45,7 +45,7 @@ router.delete("/delete/:productIdentifier", async (req, res) => {
 router.get("/:productIdentifier", async (req, res) => {
   try{
     const productIdentifier = req.params.productIdentifier;
-    const product  = await Product.find({productIdentifier});
+    const product  = await Product.findOne({_id: productIdentifier});
     res.status(201).json(product);
   }catch (e) {
     res.status(500).json({});

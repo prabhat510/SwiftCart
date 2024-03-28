@@ -10,6 +10,8 @@ const cartRoutes = require('./routes/cartRoutes');
 const productRoutes = require('./routes/productRoutes');
 const orderRoutes = require('./routes/orderRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
+const reviewRoutes = require('./routes/reviewRoutes');
+const sellerRoutes = require('./routes/sellerRoutes');
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -26,6 +28,8 @@ app.use('/api/carts', cartRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/order', orderRoutes);
 app.use('/api/payment', paymentRoutes);
+app.use('/api/reviews', reviewRoutes);
+app.use('/api/sellers', sellerRoutes);
 app.use('/api/images', express.static('./images'))
 
 
