@@ -20,7 +20,6 @@ const productSchema = new mongoose.Schema({
   material: String,
   warranty: String,
   discount: {type: Number, default: 0},
-  reviews: [String]
 });
 
 const Product = mongoose.model("Product", productSchema);
