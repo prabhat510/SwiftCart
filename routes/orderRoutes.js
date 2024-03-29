@@ -19,8 +19,10 @@ router.post('/create', verifyToken, async (req, res)=> {
 // get list of orders for a particular user
 router.get('/list', verifyToken, async (req, res)=> {
     const userId = req.user.userId;
+    const offset = req.query.offset || 0;
+    const limit = req.query.limit || 10;
     try {
-        const orders = await Order.find({user: new ObjectId(userId)});
+        const orders = await Order.find({user: new ObjectId(userId)}).skip(parseInt(offset)).limit(parseInt(limit));
         return res.status(200).json(orders);
     } catch (error) {
         res.status(500).send('server error');

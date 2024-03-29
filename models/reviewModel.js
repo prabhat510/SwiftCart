@@ -32,6 +32,10 @@ const reviewSchema = new mongoose.Schema({
   upvotes: {
     type: Number,
     default: 0
+  },
+  authorRating: {
+    type: Number,
+    default: 0
   }
 });
 

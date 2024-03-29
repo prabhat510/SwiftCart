@@ -36,7 +36,7 @@ router.delete("/delete/:productIdentifier", async (req, res) => {
   try{
     const productIdentifier = req.params.productIdentifier;
     const product  = await Product.findOneAndDelete({productIdentifier});
-    res.status(201).json(product);
+    res.status(204).json(product);
   }catch (e) {
     res.status(500).json({});
   }
@@ -45,8 +45,8 @@ router.delete("/delete/:productIdentifier", async (req, res) => {
 router.get("/:productIdentifier", async (req, res) => {
   try{
     const productIdentifier = req.params.productIdentifier;
-    const product  = await Product.findOne({_id: productIdentifier});
-    res.status(201).json(product);
+    const product  = await Product.findOne({_id: productIdentifier}).populate('seller');
+    res.status(200).json(product);
   }catch (e) {
     res.status(500).json({});
   }

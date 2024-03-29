@@ -100,7 +100,7 @@ router.delete('/remove', verifyToken, async(req, res)=>{
         cart.items = cart.items.filter((item)=> item.product.toString() !== payload.productId);
         await cart.save();
         console.log('cart items after', cart.items.length, cart.items);
-        res.status(200).json({message: "item removed successfully"});
+        res.status(204).json({message: "item removed successfully"});
     } catch (error) {
         res.status(500).send('server error');
     }
@@ -122,7 +122,7 @@ router.delete('/remove/items', verifyToken, async(req, res)=>{
         })
         await cart.save();
         console.log('cart items after', cart.items.length, cart.items);
-        res.status(200).send("cart cleared successfully");
+        res.status(204).send("cart cleared successfully");
     } catch (error) {
         res.status(500).send('server error');
     }
