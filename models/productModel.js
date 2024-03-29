@@ -16,7 +16,7 @@ const productSchema = new mongoose.Schema({
   isAvailable: { type: Boolean, required: true },
   weight: String,
   size: String,
-  color: String,
+  colors: [String],
   material: String,
   warranty: String,
   discount: {type: Number, default: 0},
