@@ -128,13 +128,33 @@ router.delete('/remove/items', verifyToken, async(req, res)=>{
     }
 })
 
-// get the count of items in the cart
+// get the count of total items in the cart
 router.get('/count', verifyToken, async (req, res)=>{
     const userId = req.user.userId;
     try{
         const cart = await Cart.findOne({user: userId}).populate('items');
         if(cart) {
             res.status(200).json({count: cart.items.length});
+        } else {
+            res.status(404).send("cart not found");
+        }
+    } catch (e) {
+        res.status(500).json({msg: "Internal server error"});
+    }
+})
+
+// get total count of an item in the cart
+router.get('/count/:productIdentifier', verifyToken, async (req, res)=>{
+    const userId = req.user.userId;
+    const productId = req.params.productIdentifier;
+    console.log("hihi", userId, productId);
+    try{
+        const cart = await Cart.findOne({user: userId}).populate('items');
+        if(cart) {
+            const product = cart.items.find(item=> item.product.equals(productId));
+            res.status(200).json({data: {
+                count: product?.quantity ? product.quantity: 0
+            }});
         } else {
             res.status(404).send("cart not found");
         }
