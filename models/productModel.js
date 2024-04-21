@@ -20,6 +20,10 @@ const productSchema = new mongoose.Schema({
   material: String,
   warranty: String,
   discount: {type: Number, default: 0},
+  orderCount: {
+    type: Number,
+    default: 0 
+  }
 });
 
 const Product = mongoose.model("Product", productSchema);

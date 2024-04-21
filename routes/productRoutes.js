@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const Product  = require("../models/productModel");
-
+const Review  = require('../models/reviewModel');
+const { ObjectId } = require("mongodb");
 
 router.post("/create", async (req, res) => {
   const productPayload = req.body;
@@ -50,6 +51,34 @@ router.get("/:productIdentifier", async (req, res) => {
   }catch (e) {
     res.status(500).json({});
   }
+})
+
+router.get("/productdetail/:productIdentifier", async (req, res)=>{
+  try {
+    const productIdentifier = req.params.productIdentifier;
+    console.log("heya", productIdentifier);
+    const orders  = await Product.findOne({_id: productIdentifier}, {orderCount: 1});
+    const reviews = await Review.find({ product: new ObjectId(productIdentifier) }).populate("user", {name: 1, username: 1}, );
+    let sum = 0;
+    let averageRating = 0;
+    for(const review of reviews) {
+      sum += review;
+    }
+    if(reviews.length > 0) {
+      averageRating = sum/reviews.length;
+    }
+    res.json({
+      data: {
+        totalOrders: orders.orderCount,
+        totalReviews: reviews.length,
+        rating: averageRating,
+        reviews: reviews
+      }
+    })
+  } catch (error) {
+    console.log("error", error);
+    res.sendStatus(500);
+  }  
 })
 
 

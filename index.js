@@ -37,6 +37,7 @@ app.get('/api/status', (req, res)=>{
   res.status(200).send("ok");
 })
 
+console.log("process.env.value", process.env.value);
 const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, ()=>{
