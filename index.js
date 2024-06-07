@@ -30,7 +30,6 @@ app.use('/api/order', orderRoutes);
 app.use('/api/payment', paymentRoutes);
 app.use('/api/reviews', reviewRoutes);
 app.use('/api/sellers', sellerRoutes);
-app.use('/api/images', express.static('./images'))
 
 
 app.get('/api/status', (req, res)=>{
